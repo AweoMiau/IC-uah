@@ -58,7 +58,7 @@ const datosMalla = {
         ],
         "s7": [
             ["Organización Industrial","ORGAIN","10","10","PC",["MICRO-II"],"I"],
-            ["Macroeconomía III","MACRO-III","10","10","ECONOM",["MACRO-I"],"I"],
+            ["Macroeconomía III","MACRO-III","10","10","ECONOM",["MACRO-II"],"I"],
             ["Microeconometría","MIC-ECON","12","12","ECONOM",["ECON"],"I"],
             ["Finanzas II","FIN-II","12","12","PC",["FIN-I"],"I"],
             ["Habilidades Profesionales III","HABPROF-III","5","5","PC",["HAB-IV"],"I"],
@@ -121,8 +121,13 @@ for (const ramos of Object.values(datosMalla.malla)) {
 }
 
 function init() {
+    cargarProgreso();
     renderLeyenda();
     renderMalla();
+
+    document.getElementById('btn-admin').classList.toggle('activo', mencionSeleccionada === 'ADMIN');
+    document.getElementById('btn-eco').classList.toggle('activo', mencionSeleccionada === 'ECONOM');
+
     actualizarEstados();
 }
 
@@ -233,7 +238,7 @@ function toggleRamo(codigo, preReqs) {
     
     if (!preReqCumplidos && !estadoRamos[codigo]) {
         const nombresFaltantes = obtenerTextoFaltantes(preReqs);
-        mostrarNotificacion(`Para tomar este ramo te falta:\n• ${nombresFaltantes.join('\n• ')}`);
+        mostrarNotificacion(`Para tomar este curso requieres aprobar:\n• ${nombresFaltantes.join('\n• ')}`);
         return;
     }
 
@@ -244,6 +249,7 @@ function toggleRamo(codigo, preReqs) {
     }
 
     actualizarEstados();
+    guardarProgreso();
 }
 
 function desaprobarDependientes() {
@@ -298,6 +304,30 @@ function cambiarMencion(nuevaMencion) {
     renderMalla();
     desaprobarDependientes();
     actualizarEstados();
+    guardarProgreso();
+}
+
+function guardarProgreso() {
+    
+    localStorage.setItem('mallaUAH_estadoRamos', JSON.stringify(estadoRamos));
+    
+    localStorage.setItem('mallaUAH_mencion', mencionSeleccionada);
+}
+
+function cargarProgreso() {
+    
+    const ramosGuardados = localStorage.getItem('mallaUAH_estadoRamos');
+    const mencionGuardada = localStorage.getItem('mallaUAH_mencion');
+
+    if (ramosGuardados) {
+        
+        Object.assign(estadoRamos, JSON.parse(ramosGuardados));
+    }
+    
+    if (mencionGuardada) {
+        
+        mencionSeleccionada = mencionGuardada;
+    }
 }
 
 function toggleDarkMode() {
@@ -329,7 +359,7 @@ function exportarMalla() {
             enlace.click();
 
             setTimeout(() => {
-                mostrarNotificacion("✅ ¡Malla descargada perfectamente!");
+                mostrarNotificacion("✅ ¡Malla descargada Correctamente!");
             }, 200);
         });
     }, 400); 

@@ -1,6 +1,4 @@
-/* =========================================
-   1. VARIABLES Y COLORES (CLARO / OSCURO)
-   ========================================= */
+/*---------------Colores/Formato-----------------------*/
 :root {
     --color-naranjo: #F05032; 
     --color-morado-eco: #6D3A7A; 
@@ -36,9 +34,7 @@ body.dark-mode {
     --color-gris-pc: #7a7a7a; 
 }
 
-/* =========================================
-   2. ESTILOS BASE Y CABECERA (DISEÑO PC)
-   ========================================= */
+/*---------------Base y cabecera -----------------------*/
 body {
     font-family: var(--font-textos);
     background-color: var(--bg-principal);
@@ -133,9 +129,7 @@ body.dark-mode .btn-mencion.activo {
     color: #121212; 
 }
 
-/* =========================================
-   3. MALLA Y RAMOS
-   ========================================= */
+/*---------------Malla y  Ramos -----------------------*/
 .leyenda { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin: 30px 0; padding: 0 20px; }
 .leyenda-item { display: flex; align-items: center; font-size: 0.9em; font-weight: bold; }
 .leyenda-color { width: 18px; height: 18px; margin-right: 8px; border-radius: 3px; }
@@ -184,9 +178,9 @@ body.dark-mode .btn-mencion.activo {
 .estado-aprobado .ramo-creditos { background-color: rgba(240, 80, 50, 0.1) !important; color: var(--color-naranjo); }
 .estado-aprobado::after { content: '✓'; position: absolute; bottom: 8px; right: 10px; color: var(--color-naranjo); font-weight: bold; font-size: 1.4em; }
 
-/* =========================================
-   4. NOTIFICACIÓN FLOTANTE (TOAST)
-   ========================================= */
+
+   /*---------------TOAST-----------------------*/
+
 .toast {
     position: fixed;
     bottom: 30px;
@@ -209,9 +203,8 @@ body.dark-mode .btn-mencion.activo {
 
 .toast.mostrar { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-/* =========================================
-   5. DISEÑO RESPONSIVO (CELULAR)
-   ========================================= */
+/*---------------Diseño telefono-----------------------*/
+
 @media (max-width: 768px) {
     .header-uah { flex-direction: column; text-align: center; padding: 20px 15px; gap: 15px; }
     .header-title h1 { text-align: center; font-size: 1.6em; }
@@ -242,9 +235,7 @@ body.dark-mode .btn-mencion.activo {
     .toast { width: 90%; bottom: 20px; font-size: 0.85em; padding: 12px 15px; }
 }
 
-/* =========================================
-   6. MODO EXPORTACIÓN (Magia por detrás)
-   ========================================= */
+/*---------------Exportación -----------------------*/
 body.modo-exportacion {
     min-width: 1600px !important; 
     overflow: visible !important;
