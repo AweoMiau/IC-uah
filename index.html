@@ -12,6 +12,7 @@
 
     <div class="header-uah">
         <div class="logo-uah">
+            <button class="btn-menu" onclick="toggleSidebar()">☰</button>
             <span class="sigla">uah</span>
             <span class="slash">/</span>
             <span class="texto">Universidad<br>Alberto Hurtado</span>
@@ -21,20 +22,155 @@
             <h1>Malla Curricular<br><strong>Ingeniería Comercial</strong></h1>
             <div class="acciones-container">
                 <button id="btn-dark" onclick="toggleDarkMode()" class="btn-accion">🌙 Modo Oscuro</button>
-                <button onclick="exportarMalla()" class="btn-accion btn-exportar">📸 Exportar</button>
+                <button onclick="exportarMalla()" class="btn-accion btn-exportar" id="btn-exportar-malla">📸 Exportar</button>
             </div>
         </div>
     </div>
     
-    <div class="selector-mencion">
-        <button id="btn-admin" class="btn-mencion activo" onclick="cambiarMencion('ADMIN')">Mención Administración</button>
-        <button id="btn-eco" class="btn-mencion" onclick="cambiarMencion('ECONOM')">Mención Economía</button>
+    <div id="vista-malla">
+        <div class="selector-mencion">
+            <button id="btn-admin" class="btn-mencion activo" onclick="cambiarMencion('ADMIN')">Mención Administración</button>
+            <button id="btn-eco" class="btn-mencion" onclick="cambiarMencion('ECONOM')">Mención Economía</button>
+        </div>
+
+        <div class="leyenda" id="leyenda"></div>
+        <div class="malla-container" id="malla"></div>
     </div>
 
-    <div class="leyenda" id="leyenda"></div>
-    <div class="malla-container" id="malla"></div>
+    <div id="vista-calendario" style="display: none; padding: 40px; text-align: center;">
+        <h2 style="font-family: var(--font-titulos); color: var(--color-naranjo); font-size: 2.5em;">📅 Planificador</h2>
+        <p>FUTURO PLANIFICADOR MENSUAL/SEMANAL ALO :'v</p>
+    </div>
 
+    <div id="modal-evento" class="modal-fondo" style="display: none;">
+        <div class="modal-caja">
+            <h3 id="modal-evento-titulo" style="margin-top:0; color: var(--color-naranjo);">Agregar Actividad</h3>
+            <p id="modal-evento-subtitulo" style="font-size: 0.9em; color: var(--texto-bloqueado); margin-top: -10px; margin-bottom: 15px;"></p>
+            
+            <input type="text" id="ev-titulo" class="input-calc" placeholder="Ej: Prueba, Ramo, Reunión" maxlength="40">
+            
+            <div id="campo-hora-libre" style="display: none; margin-top: 10px;">
+                <input type="time" id="ev-hora" class="input-calc" style="width: 100%;">
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
+                <select id="ev-tipo" class="input-calc" style="margin: 0; flex: 1;">
+                    <option value="Cátedra">Cátedra</option>
+                    <option value="Ayudantía">Ayudantía</option>
+                    <option value="Prueba">Prueba</option>
+                    <option value="Trabajo">Entrega / Trabajo</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <input type="color" id="ev-color" value="#6D3A7A" style="height: 42px; width: 50px; padding: 0; border: none; border-radius: 8px; cursor: pointer;">
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn-accion" onclick="cerrarModalEvento()">Cancelar</button>
+                <button class="btn-accion" style="background:var(--color-naranjo); color:#fff;" onclick="guardarNuevoEvento()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-eliminar-evento" class="modal-fondo" style="display: none;">
+        <div class="modal-caja" style="text-align: center;">
+            <h3 style="margin-top:0; color: #d9534f;">⚠️ Eliminar Actividad</h3>
+            <p style="margin-bottom: 20px;">¿Quieres quitar <strong id="evento-nombre-borrar"></strong>?</p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <button class="btn-accion" onclick="cerrarModalEliminarEvento()">Cancelar</button>
+                <button class="btn-accion" style="background:#d9534f; color:#fff; border-color:#d9534f;" onclick="confirmarEliminarEvento()">Sí, borrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="vista-calculadora" style="display: none; padding: 20px 50px;">
+        <h2 style="font-family: var(--font-titulos); color: var(--color-naranjo); font-size: 2em; margin-bottom: 20px;">🧮 Calculadora de Notas</h2>
+        
+        <div class="calc-perfiles-bar" style="display: flex; gap: 10px; margin-bottom: 25px; align-items: center; background: var(--bg-tarjeta); padding: 15px; border-radius: 12px; border: 1px solid var(--borde-tarjeta); box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <select id="calc-selector-ramo" class="input-calc" style="flex: 1; font-weight: bold; font-size: 1.1em; margin: 0; padding: 10px;" onchange="cambiarPerfilCalc()">
+                </select>
+            <button class="btn-accion" onclick="abrirModalCrearPerfil()">➕ Nuevo Ramo</button>
+            <button class="btn-accion" onclick="abrirModalRenombrarPerfil()">✏️ Renombrar</button>
+            <button class="btn-accion" style="color: #d9534f; border-color: #d9534f;" onclick="abrirModalEliminarPerfil()">🗑️ Eliminar</button>
+        </div>
+
+        <div class="calc-container">
+            <div class="calc-panel-izq">
+                <div class="calc-header-filas">
+                    <span style="flex: 2;">Evaluación</span>
+                    <span style="flex: 1; text-align: center;">Nota</span>
+                    <span style="flex: 1; text-align: center;">Peso (%)</span>
+                    <span style="width: 30px;"></span>
+                </div>
+                
+                <div id="calc-filas">
+                    </div>
+                
+                <button class="btn-agregar-eval" onclick="agregarFilaCalc()">+ Agregar Evaluación</button>
+            </div>
+
+            <div class="calc-panel-der">
+                <div class="calc-resumen">
+                    <h3 style="margin-top: 0; border-bottom: 1px solid var(--borde-tarjeta); padding-bottom: 10px;">Resumen</h3>
+                    <div class="calc-stat"><span>Porcentaje Ingresado:</span> <strong id="calc-suma-peso">0%</strong></div>
+                    <div class="calc-stat"><span>Promedio de Notas:</span> <strong id="calc-promedio" style="color: var(--color-naranjo); font-size: 1.5em;">-</strong></div>
+                    <hr style="border-color: var(--borde-tarjeta); margin: 15px 0;">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label style="font-size: 0.9em; font-weight: bold;">Nota Aprobación Curso:</label>
+                            <input type="number" id="calc-meta" value="4.0" step="0.1" min="1.0" max="7.0" class="input-calc" style="width: 70px; padding: 8px; text-align: center;" oninput="guardarEstadoCalc()">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label style="font-size: 0.9em; font-weight: bold;">Ponderación Examen Final:</label>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="number" id="calc-peso-examen" value="30" step="1" min="0" max="100" class="input-calc" style="width: 70px; padding: 8px; text-align: center;" oninput="guardarEstadoCalc()">
+                                <span style="font-weight: bold;">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="calc-mensaje-final" style="padding: 15px; border-radius: 8px; background: var(--bg-bloqueado); text-align: center; font-size: 0.95em;">
+                        Ingresa tus calificaciones y sus ponderaciones.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-perfil-calc" class="modal-fondo" style="display: none;">
+        <div class="modal-caja">
+            <h3 id="modal-perfil-titulo" style="margin-top:0; color: var(--color-naranjo);">Gestión de Ramo</h3>
+            <input type="text" id="input-nombre-perfil" class="input-calc" placeholder="Ej: Microeconomía" maxlength="30">
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn-accion" onclick="cerrarModalPerfil()">Cancelar</button>
+                <button class="btn-accion" style="background:var(--color-naranjo); color:#fff;" onclick="guardarModalPerfil()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-eliminar-perfil" class="modal-fondo" style="display: none;">
+        <div class="modal-caja" style="text-align: center;">
+            <h3 style="margin-top:0; color: #d9534f;">⚠️ Eliminar Ramo</h3>
+            <p style="margin-bottom: 20px;">¿Estás seguro de que quieres borrar TODAS las notas de <strong id="nombre-ramo-borrar"></strong>?</p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <button class="btn-accion" onclick="cerrarModalEliminarPerfil()">Cancelar</button>
+                <button class="btn-accion" style="background:#d9534f; color:#fff; border-color:#d9534f;" onclick="confirmarEliminarPerfil()">Sí, borrar</button>
+            </div>
+        </div>
+    </div>
+    
     <div id="toast-notificacion" class="toast"></div>
+
+    <div id="sidebar-overlay" class="menu-overlay" onclick="toggleSidebar()"></div>
+    <div id="sidebar-left" class="sidebar-izq">
+        <div class="sidebar-header">
+            <h2>Navegación</h2>
+            <button onclick="toggleSidebar()" class="btn-cerrar-menu">✖</button>
+        </div>
+        <button class="btn-nav activo" onclick="cambiarVista('malla')">📊 Malla Curricular</button>
+        <button class="btn-nav" onclick="cambiarVista('calendario')">📅 Planificador</button>
+        <button class="btn-nav" onclick="cambiarVista('calculadora')">🧮 Calculadora de Notas</button>
+    </div>
 
     <script src="app.js"></script>
 </body>

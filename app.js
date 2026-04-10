@@ -307,36 +307,45 @@ function cambiarMencion(nuevaMencion) {
     guardarProgreso();
 }
 
+// ==========================================
+// MEMORIA LOCAL (GUARDADO AUTOMÁTICO)
+// ==========================================
 function guardarProgreso() {
-    
     localStorage.setItem('mallaUAH_estadoRamos', JSON.stringify(estadoRamos));
-    
     localStorage.setItem('mallaUAH_mencion', mencionSeleccionada);
 }
 
 function cargarProgreso() {
-    
     const ramosGuardados = localStorage.getItem('mallaUAH_estadoRamos');
     const mencionGuardada = localStorage.getItem('mallaUAH_mencion');
+    const temaOscuroGuardado = localStorage.getItem('mallaUAH_temaOscuro'); // <-- NUEVO
 
     if (ramosGuardados) {
-        
         Object.assign(estadoRamos, JSON.parse(ramosGuardados));
     }
     
     if (mencionGuardada) {
-        
         mencionSeleccionada = mencionGuardada;
+    }
+
+    // <-- NUEVO: Aplicar el modo oscuro si estaba guardado
+    if (temaOscuroGuardado === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('btn-dark').innerText = '☀️ Modo Claro';
     }
 }
 
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const btn = document.getElementById('btn-dark');
+    
+    // <-- NUEVO: Guardar la preferencia al apretar el botón
     if (document.body.classList.contains('dark-mode')) {
         btn.innerText = '☀️ Modo Claro';
+        localStorage.setItem('mallaUAH_temaOscuro', 'true');
     } else {
         btn.innerText = '🌙 Modo Oscuro';
+        localStorage.setItem('mallaUAH_temaOscuro', 'false');
     }
 }
 
@@ -363,6 +372,330 @@ function exportarMalla() {
             }, 200);
         });
     }, 400); 
+}
+
+// ==========================================
+// NAVEGACIÓN Y MENÚ LATERAL
+// ==========================================
+function toggleSidebar() {
+    document.getElementById('sidebar-left').classList.toggle('activo');
+    document.getElementById('sidebar-overlay').classList.toggle('activo');
+}
+
+function cambiarVista(vista) {
+    toggleSidebar(); 
+    document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('activo'));
+
+    document.getElementById('vista-malla').style.display = 'none';
+    document.getElementById('vista-calendario').style.display = 'none';
+    document.getElementById('vista-calculadora').style.display = 'none';
+    document.querySelector('.acciones-container .btn-exportar').style.display = 'none'; 
+
+    if (vista === 'malla') {
+        document.getElementById('vista-malla').style.display = 'block';
+        document.querySelector('.acciones-container .btn-exportar').style.display = 'inline-block'; 
+        document.querySelectorAll('.btn-nav')[0].classList.add('activo');
+    } else if (vista === 'calendario') {
+        document.getElementById('vista-calendario').style.display = 'block';
+        document.querySelectorAll('.btn-nav')[1].classList.add('activo');
+        // Borramos la función que dibujaba el calendario roto
+    } else if (vista === 'calculadora') {
+        document.getElementById('vista-calculadora').style.display = 'block';
+        document.querySelectorAll('.btn-nav')[2].classList.add('activo');
+        inicializarCalculadora();
+    }
+}
+
+// ==========================================
+// CALCULADORA DE NOTAS (SISTEMA DE PERFILES)
+// ==========================================
+
+let perfilesCalc = JSON.parse(localStorage.getItem('mallaUAH_calcPerfiles')) || { 
+    "Ramo General": { meta: 4.0, pesoExamen: 30, evaluaciones: [] } 
+};
+let perfilActualCalc = localStorage.getItem('mallaUAH_calcPerfilActual') || "Ramo General";
+let modoModalPerfil = 'crear'; // Puede ser 'crear' o 'renombrar'
+
+// Asegurar que exista un perfil si hay errores en caché
+if (!perfilesCalc[perfilActualCalc]) {
+    perfilActualCalc = Object.keys(perfilesCalc)[0];
+}
+
+function inicializarCalculadora() {
+    actualizarSelectorPerfiles();
+    renderizarPerfilCalc();
+}
+
+function actualizarSelectorPerfiles() {
+    const selector = document.getElementById('calc-selector-ramo');
+    selector.innerHTML = '';
+    
+    Object.keys(perfilesCalc).forEach(nombre => {
+        const option = document.createElement('option');
+        option.value = nombre;
+        option.innerText = nombre;
+        if (nombre === perfilActualCalc) option.selected = true;
+        selector.appendChild(option);
+    });
+}
+
+function cambiarPerfilCalc() {
+    perfilActualCalc = document.getElementById('calc-selector-ramo').value;
+    localStorage.setItem('mallaUAH_calcPerfilActual', perfilActualCalc);
+    renderizarPerfilCalc();
+}
+
+// ---- CONTROL DE MODALES (SIN ALERTS NATIVOS) ----
+
+function abrirModalCrearPerfil() {
+    modoModalPerfil = 'crear';
+    document.getElementById('modal-perfil-titulo').innerText = "Nuevo Ramo";
+    document.getElementById('input-nombre-perfil').value = "";
+    document.getElementById('modal-perfil-calc').style.display = 'flex';
+}
+
+function abrirModalRenombrarPerfil() {
+    modoModalPerfil = 'renombrar';
+    document.getElementById('modal-perfil-titulo').innerText = "Renombrar Ramo";
+    document.getElementById('input-nombre-perfil').value = perfilActualCalc;
+    document.getElementById('modal-perfil-calc').style.display = 'flex';
+}
+
+function cerrarModalPerfil() {
+    document.getElementById('modal-perfil-calc').style.display = 'none';
+}
+
+function guardarModalPerfil() {
+    const nombreNuevo = document.getElementById('input-nombre-perfil').value.trim();
+    
+    if (nombreNuevo === "") {
+        mostrarNotificacion("⚠️ Debes ingresar un nombre.");
+        return;
+    }
+    
+    if (perfilesCalc[nombreNuevo] && nombreNuevo !== perfilActualCalc) {
+        mostrarNotificacion("⚠️ Ya existe un ramo con ese nombre.");
+        return;
+    }
+
+    if (modoModalPerfil === 'crear') {
+        perfilesCalc[nombreNuevo] = { meta: 4.0, pesoExamen: 30, evaluaciones: [] };
+        perfilActualCalc = nombreNuevo;
+        mostrarNotificacion(`✅ Ramo "${nombreNuevo}" creado.`);
+    } 
+    else if (modoModalPerfil === 'renombrar') {
+        if (nombreNuevo !== perfilActualCalc) {
+            perfilesCalc[nombreNuevo] = perfilesCalc[perfilActualCalc];
+            delete perfilesCalc[perfilActualCalc];
+            perfilActualCalc = nombreNuevo;
+            mostrarNotificacion("✅ Ramo renombrado.");
+        }
+    }
+    
+    guardarEnMemoriaCalc();
+    actualizarSelectorPerfiles();
+    renderizarPerfilCalc();
+    cerrarModalPerfil();
+}
+
+function abrirModalEliminarPerfil() {
+    if (Object.keys(perfilesCalc).length === 1) {
+        mostrarNotificacion("⚠️ No puedes borrar tu único ramo.");
+        return;
+    }
+    document.getElementById('nombre-ramo-borrar').innerText = perfilActualCalc;
+    document.getElementById('modal-eliminar-perfil').style.display = 'flex';
+}
+
+function cerrarModalEliminarPerfil() {
+    document.getElementById('modal-eliminar-perfil').style.display = 'none';
+}
+
+function confirmarEliminarPerfil() {
+    delete perfilesCalc[perfilActualCalc];
+    perfilActualCalc = Object.keys(perfilesCalc)[0]; 
+    
+    guardarEnMemoriaCalc();
+    actualizarSelectorPerfiles();
+    renderizarPerfilCalc();
+    cerrarModalEliminarPerfil();
+    mostrarNotificacion("🗑️ Ramo eliminado.");
+}
+
+// ---- LOGICA INTERNA Y MATEMÁTICAS ----
+
+function guardarEnMemoriaCalc() {
+    localStorage.setItem('mallaUAH_calcPerfiles', JSON.stringify(perfilesCalc));
+    localStorage.setItem('mallaUAH_calcPerfilActual', perfilActualCalc);
+}
+
+function guardarEstadoCalc() {
+    if (!perfilesCalc[perfilActualCalc]) return;
+    
+    perfilesCalc[perfilActualCalc].meta = parseFloat(document.getElementById('calc-meta').value) || 4.0;
+    perfilesCalc[perfilActualCalc].pesoExamen = parseFloat(document.getElementById('calc-peso-examen').value) || 0;
+    
+    const filas = document.querySelectorAll('.calc-fila');
+    const evaluaciones = [];
+    
+    filas.forEach(fila => {
+        const id = fila.id.replace('calc-fila-', '');
+        evaluaciones.push({
+            id: id,
+            nombre: fila.querySelector('.val-nombre').value,
+            nota: fila.querySelector('.val-nota').value,
+            peso: fila.querySelector('.val-peso').value
+        });
+    });
+    
+    perfilesCalc[perfilActualCalc].evaluaciones = evaluaciones;
+    guardarEnMemoriaCalc();
+    calcularNotas(); 
+}
+
+function renderizarPerfilCalc() {
+    const data = perfilesCalc[perfilActualCalc];
+    document.getElementById('calc-meta').value = data.meta;
+    document.getElementById('calc-peso-examen').value = data.pesoExamen;
+    
+    const contenedor = document.getElementById('calc-filas');
+    contenedor.innerHTML = '';
+    
+    data.evaluaciones.forEach(ev => {
+        dibujarFilaEnPantalla(ev.id, ev.nombre, ev.nota, ev.peso);
+    });
+    
+    calcularNotas();
+}
+
+function agregarFilaCalc() {
+    const nuevoId = Date.now().toString(); 
+    dibujarFilaEnPantalla(nuevoId, "", "", "");
+    guardarEstadoCalc();
+}
+
+function eliminarFilaCalc(id) {
+    const fila = document.getElementById(`calc-fila-${id}`);
+    if (fila) fila.remove();
+    guardarEstadoCalc();
+}
+
+function dibujarFilaEnPantalla(id, nombre, nota, peso) {
+    const contenedor = document.getElementById('calc-filas');
+    const fila = document.createElement('div');
+    fila.className = 'calc-fila';
+    fila.id = `calc-fila-${id}`;
+    
+    fila.innerHTML = `
+        <input type="text" class="input-calc val-nombre" placeholder="Nombre (opcional)" maxlength="30" value="${nombre}" oninput="guardarEstadoCalc()">
+        <input type="text" class="input-calc val-nota" placeholder="1.0 - 7.0" value="${nota}" oninput="formatearNota(event, this)">
+        <input type="number" class="input-calc val-peso" placeholder="%" step="1" min="0" max="100" value="${peso}" oninput="guardarEstadoCalc()">
+        <button onclick="eliminarFilaCalc('${id}')" class="btn-eliminar-fila" title="Eliminar fila">✖</button>
+    `;
+    contenedor.appendChild(fila);
+}
+
+function formatearNota(e, input) {
+    if (e.inputType === 'deleteContentBackward') {
+        guardarEstadoCalc();
+        return;
+    }
+    
+    let val = input.value.replace(/[^0-9]/g, ''); 
+    if (val.length > 2) val = val.substring(0, 2);
+    
+    if (val.length === 2) {
+        input.value = val.charAt(0) + '.' + val.charAt(1);
+    } else {
+        input.value = val;
+    }
+    guardarEstadoCalc();
+}
+
+function calcularNotas() {
+    let sumaPesos = 0;
+    let sumaPonderada = 0;
+    let meta = parseFloat(document.getElementById('calc-meta').value) || 4.0;
+    let pesoExamen = parseFloat(document.getElementById('calc-peso-examen').value) || 0;
+    
+    const filas = document.querySelectorAll('.calc-fila');
+    
+    filas.forEach(fila => {
+        const notaStr = fila.querySelector('.val-nota').value;
+        const pesoStr = fila.querySelector('.val-peso').value;
+        
+        let peso = 0;
+        if (pesoStr !== "") {
+            peso = parseFloat(pesoStr);
+            sumaPesos += peso;
+        }
+
+        if (notaStr !== "" && peso > 0) {
+            const nota = parseFloat(notaStr);
+            sumaPonderada += (nota * (peso / 100));
+        }
+    });
+
+    const txtSumaPeso = document.getElementById('calc-suma-peso');
+    const txtPromedio = document.getElementById('calc-promedio');
+    const cajaMensaje = document.getElementById('calc-mensaje-final');
+    
+    txtSumaPeso.innerText = `${sumaPesos}%`;
+    txtSumaPeso.style.color = (sumaPesos + pesoExamen) > 100 ? '#d9534f' : 'inherit';
+    
+    let promedioActual = 0;
+    if (sumaPesos > 0) {
+        promedioActual = sumaPonderada / (sumaPesos / 100);
+    }
+    txtPromedio.innerText = sumaPesos > 0 ? promedioActual.toFixed(2) : '-';
+    
+    cajaMensaje.className = ''; 
+    cajaMensaje.style.background = '';
+    cajaMensaje.style.color = '';
+    cajaMensaje.style.border = '';
+    
+    if (sumaPesos === 0) {
+        cajaMensaje.innerHTML = "Ingresa tus calificaciones y sus ponderaciones.";
+        cajaMensaje.style.background = 'var(--bg-bloqueado)';
+        return;
+    }
+
+    if ((sumaPesos + pesoExamen) > 100) {
+        cajaMensaje.className = 'calc-alerta-roja';
+        cajaMensaje.innerHTML = "Error: La suma de las ponderaciones de las notas y el examen supera el 100%.";
+        return;
+    }
+
+    if ((sumaPesos + pesoExamen) < 100) {
+        cajaMensaje.className = 'calc-alerta-naranja';
+        const faltante = 100 - sumaPesos - pesoExamen;
+        cajaMensaje.innerHTML = `Falta un <strong>${faltante}%</strong> de evaluaciones por registrar en la tabla para realizar el cálculo del examen.`;
+        return;
+    }
+
+    if (pesoExamen === 0) {
+        if (sumaPonderada >= meta) {
+            cajaMensaje.className = 'calc-alerta-verde';
+            cajaMensaje.innerHTML = `Curso aprobado. Tu promedio final es <strong>${sumaPonderada.toFixed(2)}</strong>.`;
+        } else {
+            cajaMensaje.className = 'calc-alerta-roja';
+            cajaMensaje.innerHTML = `Curso reprobado. Tu promedio final es <strong>${sumaPonderada.toFixed(2)}</strong>.`;
+        }
+        return;
+    }
+
+    const notaNecesaria = (meta - sumaPonderada) / (pesoExamen / 100);
+
+    if (notaNecesaria > 7.0) {
+        cajaMensaje.className = 'calc-alerta-roja';
+        cajaMensaje.innerHTML = `Matemáticamente imposible. Requieres un <strong>${notaNecesaria.toFixed(2)}</strong> en el examen final.`;
+    } else if (notaNecesaria <= 1.0) {
+        cajaMensaje.className = 'calc-alerta-verde';
+        cajaMensaje.innerHTML = `Situación asegurada. Incluso obteniendo <strong>1.0</strong> en el examen final, apruebas el curso.`;
+    } else {
+        cajaMensaje.className = 'calc-alerta-naranja';
+        cajaMensaje.innerHTML = `Necesitarás un <strong>${notaNecesaria.toFixed(2)}</strong> en el examen final para aprobar.`;
+    }
 }
 
 window.onload = init;
