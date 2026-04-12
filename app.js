@@ -1,214 +1,270 @@
+// ==========================================
+// DATOS DE LA MALLA (Estructura clara con objetos nombrados)
+// ==========================================
+
 const datosMalla = {
-    "malla": {
-        "s1": [
-            ["Introducción a la Microeconomía","INTMIC","10","10","PC",[],"I"],
-            ["Matemática I","MAT-I","12","12","PC",[],"A"],
-            ["Introducción a la Adminsitración I","INAD-I","10","10","PC",[],"I"],
-            ["Habilidades de Aprendizaje I","HAB-I","5","5","PC",[],"I"],
-            ["Ética General","ETICG","5","5","PC",[],"I"],
-            ["Habilidades de Aprendizaje II","HAB-II","3","3","PC",[],"I"]
+    semestres: {
+        s1: [
+            { nombre: "Introducción a la Microeconomía", codigo: "INTMIC",  creditos: 10, categoria: "PC",     preReqs: [],                          semestre: "I" },
+            { nombre: "Matemática I",                    codigo: "MAT-I",   creditos: 12, categoria: "PC",     preReqs: [],                          semestre: "A" },
+            { nombre: "Introducción a la Administración I", codigo: "INAD-I", creditos: 10, categoria: "PC",   preReqs: [],                          semestre: "I" },
+            { nombre: "Habilidades de Aprendizaje I",    codigo: "HAB-I",   creditos: 5,  categoria: "PC",     preReqs: [],                          semestre: "I" },
+            { nombre: "Ética General",                   codigo: "ETICG",   creditos: 5,  categoria: "PC",     preReqs: [],                          semestre: "I" },
+            { nombre: "Habilidades de Aprendizaje II",   codigo: "HAB-II",  creditos: 3,  categoria: "PC",     preReqs: [],                          semestre: "I" }
         ],
-        "s2": [
-            ["Introducción a la Macroeconomía","INTMAC","10","10","PC",[],"P"],
-            ["Matemática II","MAT-II","8","8","PC",["MAT-I"],"A"],
-            ["Introducción a la Administración II","INAD-II","8","8","PC",["INAD-I"],"P"],
-            ["Contabilidad I","CON-I","8","8","PC",[],"P"],
-            ["Habilidades de Aprendizaje III","HAB-III","3","3","PC",[],"P"],
-            ["Optativo Formación General","OFG-1","5","5","OFC",[],"I"],
-            ["Inglés I","ING-I","10","10","PC",[],"I"]
+        s2: [
+            { nombre: "Introducción a la Macroeconomía", codigo: "INTMAC",  creditos: 10, categoria: "PC",     preReqs: [],                          semestre: "P" },
+            { nombre: "Matemática II",                   codigo: "MAT-II",  creditos: 8,  categoria: "PC",     preReqs: ["MAT-I"],                   semestre: "A" },
+            { nombre: "Introducción a la Administración II", codigo: "INAD-II", creditos: 8, categoria: "PC",  preReqs: ["INAD-I"],                  semestre: "P" },
+            { nombre: "Contabilidad I",                  codigo: "CON-I",   creditos: 8,  categoria: "PC",     preReqs: [],                          semestre: "P" },
+            { nombre: "Habilidades de Aprendizaje III",  codigo: "HAB-III", creditos: 3,  categoria: "PC",     preReqs: [],                          semestre: "P" },
+            { nombre: "Optativo Formación General",      codigo: "OFG-1",   creditos: 5,  categoria: "OFC",    preReqs: [],                          semestre: "I" },
+            { nombre: "Inglés I",                        codigo: "ING-I",   creditos: 10, categoria: "PC",     preReqs: [],                          semestre: "I" }
         ],
-        "s3": [
-            ["Microeconomía I","MICRO-I","8","8","PC",["MAT-II","INTMIC"],"I"],
-            ["Matemática III","MAT-III","8","8","PC",["MAT-II"],"A"],
-            ["Pensamiento Estratégico","PENEST","7","7","PC",["INAD-II"],"I"],
-            ["Contabilidad II","CON-II","8","8","PC",["CON-I"],"I"],
-            ["Tecnología de la Información","TEC","3","3","PC",[],"I"],
-            ["Optativo Formación Teológica","OFT-1","5","5","OFC",[],"I"],
-            ["Inglés II","ING-II","10","10","PC",["ING-I"],"I"]
+        s3: [
+            { nombre: "Microeconomía I",                 codigo: "MICRO-I",  creditos: 8, categoria: "PC",     preReqs: ["MAT-II", "INTMIC"],        semestre: "I" },
+            { nombre: "Matemática III",                  codigo: "MAT-III", creditos: 8,  categoria: "PC",     preReqs: ["MAT-II"],                  semestre: "A" },
+            { nombre: "Pensamiento Estratégico",         codigo: "PENEST",  creditos: 7,  categoria: "PC",     preReqs: ["INAD-II"],                 semestre: "I" },
+            { nombre: "Contabilidad II",                 codigo: "CON-II",  creditos: 8,  categoria: "PC",     preReqs: ["CON-I"],                   semestre: "I" },
+            { nombre: "Tecnología de la Información",    codigo: "TEC",     creditos: 3,  categoria: "PC",     preReqs: [],                          semestre: "I" },
+            { nombre: "Optativo Formación Teológica",    codigo: "OFT-1",   creditos: 5,  categoria: "OFC",    preReqs: [],                          semestre: "I" },
+            { nombre: "Inglés II",                       codigo: "ING-II",  creditos: 10, categoria: "PC",     preReqs: ["ING-I"],                   semestre: "I" }
         ],
-        "s4": [
-            ["Macroeconomía I","MACRO-I","8","8","PC",["MAT-II","INTMAC"],"P"],
-            ["Matemática IV","MAT-IV","8","8","PC",["MAT-III"],"P"],
-            ["Personas y Organizaciones","PYO","7","7","PC",["PENEST"],"P"],
-            ["Estadística I","EST-I","8","8","PC",["MAT-II","TEC"],"P"],
-            ["Marketing I","MARK-I","8","8","PC",["PENEST"],"P"],
-            ["Optativo Formación General","OFG-2","5","5","OFC",[],"P"],
-            ["Optativo Formación Teológica","OFT-2","5","5","OFC",[],"P"],
-            ["Práctica Básica","PB","13","13","PB",["INTMIC","PENEST"],""]
+        s4: [
+            { nombre: "Macroeconomía I",                 codigo: "MACRO-I", creditos: 8,  categoria: "PC",     preReqs: ["MAT-II", "INTMAC"],        semestre: "P" },
+            { nombre: "Matemática IV",                   codigo: "MAT-IV",  creditos: 8,  categoria: "PC",     preReqs: ["MAT-III"],                 semestre: "P" },
+            { nombre: "Personas y Organizaciones",       codigo: "PYO",     creditos: 7,  categoria: "PC",     preReqs: ["PENEST"],                  semestre: "P" },
+            { nombre: "Estadística I",                   codigo: "EST-I",   creditos: 8,  categoria: "PC",     preReqs: ["MAT-II", "TEC"],           semestre: "P" },
+            { nombre: "Marketing I",                     codigo: "MARK-I",  creditos: 8,  categoria: "PC",     preReqs: ["PENEST"],                  semestre: "P" },
+            { nombre: "Optativo Formación General",      codigo: "OFG-2",   creditos: 5,  categoria: "OFC",    preReqs: [],                          semestre: "P" },
+            { nombre: "Optativo Formación Teológica",    codigo: "OFT-2",   creditos: 5,  categoria: "OFC",    preReqs: [],                          semestre: "P" },
+            { nombre: "Práctica Básica",                 codigo: "PB",      creditos: 13, categoria: "PB",     preReqs: ["INTMIC", "PENEST"],        semestre: "" }
         ],
-        "s5": [
-            ["Microeconomía II","MICRO-II","10","10","PC",["MICRO-I"],"I"],
-            ["Matemáticas para la Economía","MATPARECO","8","8","ECONOM",["MAT-IV"],"I"],
-            ["Estadística II","EST-II","8","8","PC",["EST-I"],"I"],
-            ["Gestión de Personas I","GESTPER-I","8","8","ADMIN",["PYO"],"I"],
-            ["Finanzas I","FIN-I","8","8","PC",["MAT-II"],"I"],
-            ["Habilidades de Apredizaje IV","HAB-IV","5","5","PC",[],"I"],
-            ["Inglés III","ING-III","10","10","PC",["ING-II"],"I"]
+        s5: [
+            { nombre: "Microeconomía II",                codigo: "MICRO-II",  creditos: 10, categoria: "PC",   preReqs: ["MICRO-I"],                 semestre: "I" },
+            { nombre: "Matemáticas para la Economía",    codigo: "MATPARECO", creditos: 8,  categoria: "ECONOM", preReqs: ["MAT-IV"],                semestre: "I" },
+            { nombre: "Estadística II",                  codigo: "EST-II",  creditos: 8,  categoria: "PC",     preReqs: ["EST-I"],                   semestre: "I" },
+            { nombre: "Gestión de Personas I",           codigo: "GESTPER-I", creditos: 8, categoria: "ADMIN", preReqs: ["PYO"],                     semestre: "I" },
+            { nombre: "Finanzas I",                      codigo: "FIN-I",   creditos: 8,  categoria: "PC",     preReqs: ["MAT-II"],                  semestre: "I" },
+            { nombre: "Habilidades de Aprendizaje IV",   codigo: "HAB-IV",  creditos: 5,  categoria: "PC",     preReqs: [],                          semestre: "I" },
+            { nombre: "Inglés III",                      codigo: "ING-III", creditos: 10, categoria: "PC",     preReqs: ["ING-II"],                  semestre: "I" }
         ],
-        "s6": [
-            ["Microeconomía III","MICRO-III","10","10","ECONOM",["MICRO-II","MATPARECO"],"P"],
-            ["Macroeconomía II","MACRO-II","10","10","PC",["MACRO-I","MAT-III"],"P"],
-            ["Econometría","ECON","10","10","ECONOM",["EST-II","MAT-III"],"P"],
-            ["Finanzas Públicas","FINPUB","10","10","ECONOM",["MICRO-I"],"P"],
-            ["Habilidades Profesionales I","HABPROF-I","5","5","PC",["HAB-IV"],"P"],
-            ["Habilidades Profesionales II","HABPROF-II","5","5","PC",["HAB-IV"],"P"],
-            ["Contabilidad para la Gestión","CONPARGE","10","10","ADMIN",["CON-II"],"P"],
-            ["Econometría para la Gestión","ECONPARGE","10","10","ADMIN",["MAT-III","EST-II"],"P"],
-            ["Marketing II","MARK-II","10","10","ADMIN",["MARK-I"],"P"]
+        s6: [
+            { nombre: "Microeconomía III",               codigo: "MICRO-III",  creditos: 10, categoria: "ECONOM", preReqs: ["MICRO-II", "MATPARECO"], semestre: "P" },
+            { nombre: "Macroeconomía II",                codigo: "MACRO-II",   creditos: 10, categoria: "PC",     preReqs: ["MACRO-I", "MAT-III"],    semestre: "P" },
+            { nombre: "Econometría",                     codigo: "ECON",       creditos: 10, categoria: "ECONOM", preReqs: ["EST-II", "MAT-III"],     semestre: "P" },
+            { nombre: "Finanzas Públicas",               codigo: "FINPUB",     creditos: 10, categoria: "ECONOM", preReqs: ["MICRO-I"],               semestre: "P" },
+            { nombre: "Habilidades Profesionales I",     codigo: "HABPROF-I",  creditos: 5,  categoria: "PC",     preReqs: ["HAB-IV"],                semestre: "P" },
+            { nombre: "Habilidades Profesionales II",    codigo: "HABPROF-II", creditos: 5,  categoria: "PC",     preReqs: ["HAB-IV"],                semestre: "P" },
+            { nombre: "Contabilidad para la Gestión",    codigo: "CONPARGE",   creditos: 10, categoria: "ADMIN",  preReqs: ["CON-II"],                semestre: "P" },
+            { nombre: "Econometría para la Gestión",     codigo: "ECONPARGE",  creditos: 10, categoria: "ADMIN",  preReqs: ["MAT-III", "EST-II"],     semestre: "P" },
+            { nombre: "Marketing II",                    codigo: "MARK-II",    creditos: 10, categoria: "ADMIN",  preReqs: ["MARK-I"],                semestre: "P" }
         ],
-        "s7": [
-            ["Organización Industrial","ORGAIN","10","10","PC",["MICRO-II"],"I"],
-            ["Macroeconomía III","MACRO-III","10","10","ECONOM",["MACRO-II"],"I"],
-            ["Microeconometría","MIC-ECON","12","12","ECONOM",["ECON"],"I"],
-            ["Finanzas II","FIN-II","12","12","PC",["FIN-I"],"I"],
-            ["Habilidades Profesionales III","HABPROF-III","5","5","PC",["HAB-IV"],"I"],
-            ["Gestión de la innovación","GESTIN","12","12","ADMIN",["PYO"],""],
-            ["Gestión de Personas II","GESTPER-II","10","10","ADMIN",["GESTPER-I"],""]
+        s7: [
+            { nombre: "Organización Industrial",         codigo: "ORGAIN",     creditos: 10, categoria: "PC",     preReqs: ["MICRO-II"],              semestre: "I" },
+            { nombre: "Macroeconomía III",               codigo: "MACRO-III",  creditos: 10, categoria: "ECONOM", preReqs: ["MACRO-II"],              semestre: "I" },
+            { nombre: "Microeconometría",                codigo: "MIC-ECON",   creditos: 12, categoria: "ECONOM", preReqs: ["ECON"],                  semestre: "I" },
+            { nombre: "Finanzas II",                     codigo: "FIN-II",     creditos: 12, categoria: "PC",     preReqs: ["FIN-I"],                 semestre: "I" },
+            { nombre: "Habilidades Profesionales III",   codigo: "HABPROF-III",creditos: 5,  categoria: "PC",     preReqs: ["HAB-IV"],                semestre: "I" },
+            { nombre: "Gestión de la Innovación",        codigo: "GESTIN",     creditos: 12, categoria: "ADMIN",  preReqs: ["PYO"],                   semestre: "" },
+            { nombre: "Gestión de Personas II",          codigo: "GESTPER-II", creditos: 10, categoria: "ADMIN",  preReqs: ["GESTPER-I"],             semestre: "" }
         ],
-        "s8": [
-            ["Teoría de Juegos","TEODJ","10","10","ECONOM",["MICRO-II"],""],
-            ["Economía Internacional","ECONO-INT","10","10","ECONOM",["MACRO-II"],""],
-            ["Macroeconometría","MAC-ECON","10","10","ECONOM",["ECON"],""],
-            ["Evaluación de Proyectos","EVALDPR","10","10","PC",["PB","FIN-II"],""],
-            ["Optativo Formación Complementaria","OFC-I","10","10","OFC",[],""],
-            ["Gestión de Personas III","GESTPER-III","10","10","ADMIN",["GESTPER-II"],""],
-            ["Gestión de Operaciones","GESTOP","10","10","ADMIN",["EST-II"],""],
-            ["Estrategia","EST","12","12","ADMIN",["MARK-I"],""]
+        s8: [
+            { nombre: "Teoría de Juegos",                codigo: "TEODJ",      creditos: 10, categoria: "ECONOM", preReqs: ["MICRO-II"],              semestre: "" },
+            { nombre: "Economía Internacional",          codigo: "ECONO-INT",  creditos: 10, categoria: "ECONOM", preReqs: ["MACRO-II"],              semestre: "" },
+            { nombre: "Macroeconometría",                codigo: "MAC-ECON",   creditos: 10, categoria: "ECONOM", preReqs: ["ECON"],                  semestre: "" },
+            { nombre: "Evaluación de Proyectos",         codigo: "EVALDPR",    creditos: 10, categoria: "PC",     preReqs: ["PB", "FIN-II"],          semestre: "" },
+            { nombre: "Optativo Formación Complementaria", codigo: "OFC-I",    creditos: 10, categoria: "OFC",    preReqs: [],                        semestre: "" },
+            { nombre: "Gestión de Personas III",         codigo: "GESTPER-III",creditos: 10, categoria: "ADMIN",  preReqs: ["GESTPER-II"],            semestre: "" },
+            { nombre: "Gestión de Operaciones",          codigo: "GESTOP",     creditos: 10, categoria: "ADMIN",  preReqs: ["EST-II"],                semestre: "" },
+            { nombre: "Estrategia",                      codigo: "ESTRAT",     creditos: 12, categoria: "ADMIN",  preReqs: ["MARK-I"],                semestre: "" }
         ],
-        "s9": [
-            ["Práctica Profesional","PP","18","18","PP",["PB","HABPROF-III"],""],
-            ["Regulación y Competencia","REYCO","12","12","ECONOM",[ ["ORGAIN","TEODJ"] ],""],
-            ["Política Económica","POLECON","10","10","ECONOM",["MACRO-II"],""],
-            ["Desarrollo Económico","DECON","12","12","ECONOM",["MIC-ECON"],""],
-            ["Ética en los Negocios y la Economía","ETICNYE","8","8","PC",["ETICG","PB"],""],
-            ["Emprendimiento","EMP","12","12","ADMIN",["GESTIN"],""],
-            ["Consultoría","COSULT","12","12","ADMIN",["GESTPER-II"],""],
-            ["Juego de Negocios","JUEGDNEG","10","10","ADMIN",["EST"],""],
-            ["Optativo Formación General","OFC-II","10","10","OFC",[],""]
+        s9: [
+            { nombre: "Práctica Profesional",            codigo: "PP",         creditos: 18, categoria: "PP",     preReqs: ["PB", "HABPROF-III"],     semestre: "" },
+            { nombre: "Regulación y Competencia",        codigo: "REYCO",      creditos: 12, categoria: "ECONOM", preReqs: [["ORGAIN", "TEODJ"]],     semestre: "" },
+            { nombre: "Política Económica",              codigo: "POLECON",    creditos: 10, categoria: "ECONOM", preReqs: ["MACRO-II"],              semestre: "" },
+            { nombre: "Desarrollo Económico",            codigo: "DECON",      creditos: 12, categoria: "ECONOM", preReqs: ["MIC-ECON"],              semestre: "" },
+            { nombre: "Ética en los Negocios y la Economía", codigo: "ETICNYE",creditos: 8,  categoria: "PC",     preReqs: ["ETICG", "PB"],           semestre: "" },
+            { nombre: "Emprendimiento",                  codigo: "EMP",        creditos: 12, categoria: "ADMIN",  preReqs: ["GESTIN"],                semestre: "" },
+            { nombre: "Consultoría",                     codigo: "CONSULT",    creditos: 12, categoria: "ADMIN",  preReqs: ["GESTPER-II"],            semestre: "" },
+            { nombre: "Juego de Negocios",               codigo: "JUEGDNEG",   creditos: 10, categoria: "ADMIN",  preReqs: ["ESTRAT"],                semestre: "" },
+            { nombre: "Optativo Formación Complementaria",      codigo: "OFC-II",     creditos: 10, categoria: "OFC",    preReqs: [],                        semestre: "" }
         ],
-        "s10": [
-            ["Taller de Titulación","TATITUT","20","20","PC",[],""],
-            ["Habilidades Profesionales IV","HABPROF-V","8","8","PC",["HAB-IV"],""],
-            ["Optativo Formación Complementaria","OFC-III","10","10","OFC",[],""],
-            ["Optativo Formación Complementaria","OFC-IV","10","10","OFC",[],""]
+        s10: [
+            { nombre: "Taller de Titulación",            codigo: "TATITUT",    creditos: 20, categoria: "PC",     preReqs: [],                        semestre: "" },
+            { nombre: "Habilidades Profesionales IV",    codigo: "HABPROF-IV",  creditos: 8,  categoria: "PC",     preReqs: ["HAB-IV"],                semestre: "" },
+            { nombre: "Optativo Formación Complementaria", codigo: "OFC-III",  creditos: 10, categoria: "OFC",    preReqs: [],                        semestre: "" },
+            { nombre: "Optativo Formación Complementaria", codigo: "OFC-IV",   creditos: 10, categoria: "OFC",    preReqs: [],                        semestre: "" }
         ]
     },
-    "categories": {
-        "PC": ["var(--color-gris-pc)", "Plan Común", "#FFFFFF"],
-        "PB": ["var(--color-naranjo)", "Práctica Básica", "#FFFFFF"],
-        "ECONOM": ["var(--color-morado-eco)", "Mención Economía", "#FFFFFF"],
-        "ADMIN": ["var(--color-amarillo-adm)", "Mención Administración", "#000000"],
-        "OFC": ["var(--color-verde-opt)", "Optativo", "#000000"],
-        "PP": ["var(--color-naranjo)", "Práctica Profesional", "#FFFFFF"]
+
+    categorias: {
+        "PC":     { color: "var(--color-gris-pc)",      label: "Plan Común",              textColor: "#FFFFFF" },
+        "PB":     { color: "var(--color-naranjo)",      label: "Práctica Básica",         textColor: "#FFFFFF" },
+        "ECONOM": { color: "var(--color-morado-eco)",   label: "Mención Economía",        textColor: "#FFFFFF" },
+        "ADMIN":  { color: "var(--color-amarillo-adm)", label: "Mención Administración",  textColor: "#000000" },
+        "OFC":    { color: "var(--color-verde-opt)",    label: "Optativo",                textColor: "#000000" },
+        "PP":     { color: "var(--color-naranjo)",      label: "Práctica Profesional",    textColor: "#FFFFFF" }
     }
 };
+
+// ==========================================
+// ESTADO GLOBAL
+// ==========================================
 
 const estadoRamos = {};
 let mencionSeleccionada = 'ADMIN';
 
+// Diccionarios de búsqueda rápida: se construyen una sola vez
 const diccionarioPreReqs = {};
-const diccionarioNombres = {}; 
+const diccionarioNombres = {};
 
-for (const ramos of Object.values(datosMalla.malla)) {
-    ramos.forEach(ramoData => {
-        const nombre = ramoData[0];
-        const codigo = ramoData[1];
-        const preReqs = ramoData[5];
-        
+for (const ramos of Object.values(datosMalla.semestres)) {
+    ramos.forEach(({ nombre, codigo, preReqs }) => {
         diccionarioPreReqs[codigo] = preReqs;
-        diccionarioNombres[codigo] = nombre; 
+        diccionarioNombres[codigo] = nombre;
     });
 }
+
+// Créditos totales por mención (calculados una sola vez)
+const totalCreditosPorMencion = {
+    ADMIN:  calcularTotalCreditos('ADMIN'),
+    ECONOM: calcularTotalCreditos('ECONOM')
+};
+
+function calcularTotalCreditos(mencion) {
+    let total = 0;
+    for (const ramos of Object.values(datosMalla.semestres)) {
+        ramos.forEach(({ creditos, categoria }) => {
+            if (categoria !== 'ECONOM' && categoria !== 'ADMIN') total += creditos;
+            else if (categoria === mencion) total += creditos;
+        });
+    }
+    return total;
+}
+
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
 
 function init() {
     cargarProgreso();
     renderLeyenda();
     renderMalla();
-
+    
     document.getElementById('btn-admin').classList.toggle('activo', mencionSeleccionada === 'ADMIN');
     document.getElementById('btn-eco').classList.toggle('activo', mencionSeleccionada === 'ECONOM');
 
     actualizarEstados();
+    actualizarContadorCreditos();
 }
+
 
 function renderLeyenda() {
     const contenedor = document.getElementById('leyenda');
-    for (const [key, value] of Object.entries(datosMalla.categories)) {
+    contenedor.innerHTML = ''; // Limpieza preventiva
+
+    for (const [, cat] of Object.entries(datosMalla.categorias)) {
         const item = document.createElement('div');
         item.className = 'leyenda-item';
-        item.innerHTML = `<div class="leyenda-color" style="background-color: ${value[0]};"></div> ${value[1]}`;
+        item.innerHTML = `<div class="leyenda-color" style="background-color: ${cat.color};"></div> ${cat.label}`;
         contenedor.appendChild(item);
     }
 }
 
+
 function renderMalla() {
     const contenedor = document.getElementById('malla');
+    contenedor.innerHTML = '';
+
     let numSemestre = 1;
 
-    for (const [semestre, ramos] of Object.entries(datosMalla.malla)) {
+    for (const [, ramos] of Object.entries(datosMalla.semestres)) {
         const col = document.createElement('div');
         col.className = 'semestre-col';
-        
+
         const titulo = document.createElement('div');
         titulo.className = 'semestre-titulo';
-        titulo.innerText = `Semestre ${numSemestre}`;
+        titulo.textContent = `Semestre ${numSemestre}`;
+        titulo.style.cursor = 'pointer';
+        titulo.title = 'Click para aprobar/desaprobar todos los ramos disponibles';
+        titulo.addEventListener('click', () => aprobarSemestreMalla(ramos));
         col.appendChild(titulo);
 
-        ramos.forEach(ramoData => {
-            const [nombre, codigo, creditos, horas, categoria, preReqs] = ramoData;
-            
-            if (categoria === 'ECONOM' && mencionSeleccionada === 'ADMIN') return;
-            if (categoria === 'ADMIN' && mencionSeleccionada === 'ECONOM') return;
+        ramos.forEach(ramo => {
+            const { nombre, codigo, creditos, categoria, preReqs } = ramo;
 
+            // Inicializar estado si no existe
             if (estadoRamos[codigo] === undefined) {
-                estadoRamos[codigo] = false; 
+                estadoRamos[codigo] = false;
             }
-            
-            const configColor = datosMalla.categories[categoria];
-            const colorBg = configColor[0];
-            const colorText = configColor[2];
 
-            const bgCreditos = colorText === '#FFFFFF' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
+            const divRamo = crearElementoRamo(nombre, codigo, creditos, categoria, preReqs);
 
-            const divRamo = document.createElement('div');
-            divRamo.className = 'ramo';
-            divRamo.id = `ramo-${codigo}`;
-            divRamo.style.backgroundColor = colorBg;
-            divRamo.style.color = colorText;
-            
-            divRamo.innerHTML = `
-                <div class="ramo-creditos" style="background-color: ${bgCreditos}">${creditos} CR</div>
-                <div class="ramo-nombre">${nombre}</div>
-                <div class="ramo-codigo">${codigo}</div>
-            `;
-            
-            divRamo.onclick = () => toggleRamo(codigo, preReqs);
+            // Ocultar ramos de la mención contraria con clase CSS (no eliminarlos del DOM)
+            if (categoria === 'ECONOM') divRamo.classList.add('solo-econom');
+            if (categoria === 'ADMIN')  divRamo.classList.add('solo-admin');
+
             col.appendChild(divRamo);
         });
 
         contenedor.appendChild(col);
         numSemestre++;
     }
+
+    aplicarVisibilidadMencion();
 }
+
+function crearElementoRamo(nombre, codigo, creditos, categoria, preReqs) {
+    const cat = datosMalla.categorias[categoria];
+    const bgCreditos = cat.textColor === '#FFFFFF' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
+
+    const div = document.createElement('div');
+    div.className = 'ramo';
+    div.id = `ramo-${codigo}`;
+    div.style.backgroundColor = cat.color;
+    div.style.color = cat.textColor;
+
+    div.innerHTML = `
+        <div class="ramo-creditos" style="background-color: ${bgCreditos}">${creditos} CR</div>
+        <div class="ramo-nombre">${nombre}</div>
+        <div class="ramo-codigo">${codigo}</div>
+    `;
+
+    div.addEventListener('click', () => toggleRamo(codigo, preReqs));
+    return div;
+}
+
+
+function aplicarVisibilidadMencion() {
+    document.querySelectorAll('.solo-econom').forEach(el => {
+        el.style.display = mencionSeleccionada === 'ECONOM' ? '' : 'none';
+    });
+    document.querySelectorAll('.solo-admin').forEach(el => {
+        el.style.display = mencionSeleccionada === 'ADMIN' ? '' : 'none';
+    });
+}
+
+// ==========================================
+// PREREQUISITOS
+// ==========================================
 
 function verificarPreReqs(reqs) {
     return reqs.every(req => {
         if (Array.isArray(req)) {
-            return req.some(r => estadoRamos[r]);
-        } else {
-            return estadoRamos[req];
+            return req.some(r => estadoRamos[r]); // Condición OR
         }
+        return estadoRamos[req];
     });
 }
 
 function obtenerTextoFaltantes(preReqs) {
-    let faltantes = [];
+    const faltantes = [];
     preReqs.forEach(req => {
         if (Array.isArray(req)) {
             const algunAprobado = req.some(r => estadoRamos[r]);
             if (!algunAprobado) {
-                const nombresO = req.map(r => diccionarioNombres[r]).join(" o ");
-                faltantes.push(`(${nombresO})`);
+                faltantes.push(`(${req.map(r => diccionarioNombres[r]).join(' o ')})`);
             }
         } else {
             if (!estadoRamos[req]) {
@@ -219,36 +275,25 @@ function obtenerTextoFaltantes(preReqs) {
     return faltantes;
 }
 
-let toastTimeout;
-function mostrarNotificacion(mensaje) {
-    const toast = document.getElementById('toast-notificacion');
-    if (!toast) return; 
-    
-    toast.innerText = mensaje;
-    toast.classList.add('mostrar');
-
-    clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-        toast.classList.remove('mostrar');
-    }, 4000); 
-}
+// =============
+// INTERACCIÓN
+// =============
 
 function toggleRamo(codigo, preReqs) {
-    const preReqCumplidos = verificarPreReqs(preReqs);
-    
-    if (!preReqCumplidos && !estadoRamos[codigo]) {
-        const nombresFaltantes = obtenerTextoFaltantes(preReqs);
-        mostrarNotificacion(`Para tomar este curso requieres aprobar:\n• ${nombresFaltantes.join('\n• ')}`);
+    if (!estadoRamos[codigo] && !verificarPreReqs(preReqs)) {
+        const faltantes = obtenerTextoFaltantes(preReqs);
+        mostrarNotificacion(`Para tomar este curso necesitas aprobar:\n• ${faltantes.join('\n• ')}`);
         return;
     }
 
     estadoRamos[codigo] = !estadoRamos[codigo];
-    
+
     if (!estadoRamos[codigo]) {
-        desaprobarDependientes(); 
+        desaprobarDependientes();
     }
 
     actualizarEstados();
+    actualizarContadorCreditos();
     guardarProgreso();
 }
 
@@ -257,208 +302,238 @@ function desaprobarDependientes() {
     do {
         huboCambios = false;
         for (const codigo in estadoRamos) {
-            if (estadoRamos[codigo]) {
-                const reqs = diccionarioPreReqs[codigo];
-                if (!verificarPreReqs(reqs)) {
-                    estadoRamos[codigo] = false;
-                    huboCambios = true;
-                }
+            if (estadoRamos[codigo] && !verificarPreReqs(diccionarioPreReqs[codigo])) {
+                estadoRamos[codigo] = false;
+                huboCambios = true;
             }
         }
-    } while (huboCambios); 
+    } while (huboCambios);
 }
 
 function actualizarEstados() {
-    const todosLosRamos = document.querySelectorAll('.ramo');
-    
-    todosLosRamos.forEach(el => {
+    document.querySelectorAll('.ramo').forEach(el => {
         const codigo = el.id.replace('ramo-', '');
-        const reqs = diccionarioPreReqs[codigo]; 
-        
+
         el.classList.remove('estado-bloqueado', 'estado-disponible', 'estado-aprobado');
 
         if (estadoRamos[codigo]) {
             el.classList.add('estado-aprobado');
+        } else if (verificarPreReqs(diccionarioPreReqs[codigo])) {
+            el.classList.add('estado-disponible');
         } else {
-            const preReqCumplidos = verificarPreReqs(reqs);
-            if (preReqCumplidos) {
-                el.classList.add('estado-disponible');
-            } else {
-                el.classList.add('estado-bloqueado');
-            }
+            el.classList.add('estado-bloqueado');
         }
     });
 }
 
+// =====================
+// CONTADOR DE CRÉDITOS 
+// =====================
+
+function actualizarContadorCreditos() {
+    const contadorEl = document.getElementById('contador-creditos');
+    if (!contadorEl) return;
+
+    let creditosAprobados = 0;
+    const total = totalCreditosPorMencion[mencionSeleccionada];
+
+    for (const ramos of Object.values(datosMalla.semestres)) {
+        ramos.forEach(({ codigo, creditos, categoria }) => {
+            if (!estadoRamos[codigo]) return;
+            // Contar solo ramos visibles en la mención activa
+            if (categoria === 'ECONOM' && mencionSeleccionada !== 'ECONOM') return;
+            if (categoria === 'ADMIN'  && mencionSeleccionada !== 'ADMIN')  return;
+            creditosAprobados += creditos;
+        });
+    }
+
+    const porcentaje = Math.round((creditosAprobados / total) * 100);
+    contadorEl.innerHTML = `<span>${creditosAprobados} / ${total} créditos</span><span class="creditos-pct">${porcentaje}%</span>`;
+
+    const barra = document.getElementById('barra-progreso');
+    if (barra) barra.style.width = `${porcentaje}%`;
+}
+
+// ===================
+// CAMBIO DE MENCIÓN 
+// ===================
+
 function cambiarMencion(nuevaMencion) {
-    if (mencionSeleccionada === nuevaMencion) return; 
+    if (mencionSeleccionada === nuevaMencion) return;
 
     mencionSeleccionada = nuevaMencion;
-    
+
     document.getElementById('btn-admin').classList.toggle('activo', nuevaMencion === 'ADMIN');
     document.getElementById('btn-eco').classList.toggle('activo', nuevaMencion === 'ECONOM');
 
-    const contenedor = document.getElementById('malla');
-    contenedor.innerHTML = '';
-
-    renderMalla();
+    // No re-renderizamos — solo mostramos/ocultamos
+    aplicarVisibilidadMencion();
     desaprobarDependientes();
     actualizarEstados();
+    actualizarContadorCreditos();
     guardarProgreso();
 }
 
-// ==========================================
-// MEMORIA LOCAL (GUARDADO AUTOMÁTICO)
-// ==========================================
+// =====================
+// TOAST NOTIFICACIONES
+// =====================
+
+let toastTimeout;
+
+function mostrarNotificacion(mensaje) {
+    const toast = document.getElementById('toast-notificacion');
+    if (!toast) return;
+
+    toast.innerText = mensaje;
+    toast.classList.add('mostrar');
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => toast.classList.remove('mostrar'), 4000);
+}
+
+// ================
+// (localStorage)
+// ================
+
 function guardarProgreso() {
     localStorage.setItem('mallaUAH_estadoRamos', JSON.stringify(estadoRamos));
     localStorage.setItem('mallaUAH_mencion', mencionSeleccionada);
 }
 
 function cargarProgreso() {
-    const ramosGuardados = localStorage.getItem('mallaUAH_estadoRamos');
+    const ramosGuardados  = localStorage.getItem('mallaUAH_estadoRamos');
     const mencionGuardada = localStorage.getItem('mallaUAH_mencion');
-    const temaOscuroGuardado = localStorage.getItem('mallaUAH_temaOscuro'); // <-- NUEVO
+    const temaOscuro      = localStorage.getItem('mallaUAH_temaOscuro');
 
-    if (ramosGuardados) {
-        Object.assign(estadoRamos, JSON.parse(ramosGuardados));
-    }
-    
-    if (mencionGuardada) {
-        mencionSeleccionada = mencionGuardada;
-    }
+    if (ramosGuardados)  Object.assign(estadoRamos, JSON.parse(ramosGuardados));
+    if (mencionGuardada) mencionSeleccionada = mencionGuardada;
 
-    // <-- NUEVO: Aplicar el modo oscuro si estaba guardado
-    if (temaOscuroGuardado === 'true') {
+    if (temaOscuro === 'true') {
         document.body.classList.add('dark-mode');
-        document.getElementById('btn-dark').innerText = '☀️ Modo Claro';
+        const btn = document.getElementById('btn-dark');
+        if (btn) btn.innerText = '☀️ Modo Claro';
     }
 }
 
 function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
+    const esDark = document.body.classList.toggle('dark-mode');
     const btn = document.getElementById('btn-dark');
-    
-    // <-- NUEVO: Guardar la preferencia al apretar el botón
-    if (document.body.classList.contains('dark-mode')) {
-        btn.innerText = '☀️ Modo Claro';
-        localStorage.setItem('mallaUAH_temaOscuro', 'true');
-    } else {
-        btn.innerText = '🌙 Modo Oscuro';
-        localStorage.setItem('mallaUAH_temaOscuro', 'false');
-    }
+    btn.innerText = esDark ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+    localStorage.setItem('mallaUAH_temaOscuro', esDark);
 }
 
-function exportarMalla() {
-    mostrarNotificacion("📸 Preparando imagen de alta calidad...");
+// ===============
+// MENÚ LATERAL
+// ===============
 
-    setTimeout(() => {
-        document.body.classList.add('modo-exportacion');
-
-        html2canvas(document.body, {
-            scale: 2, 
-            backgroundColor: document.body.classList.contains('dark-mode') ? '#121212' : '#FFFFFF',
-            windowWidth: 1600 
-        }).then(canvas => {
-            document.body.classList.remove('modo-exportacion');
-
-            const enlace = document.createElement('a');
-            enlace.download = 'Mi_Malla_UAH.png';
-            enlace.href = canvas.toDataURL('image/png');
-            enlace.click();
-
-            setTimeout(() => {
-                mostrarNotificacion("✅ ¡Malla descargada Correctamente!");
-            }, 200);
-        });
-    }, 400); 
-}
-
-// ==========================================
-// NAVEGACIÓN Y MENÚ LATERAL
-// ==========================================
 function toggleSidebar() {
     document.getElementById('sidebar-left').classList.toggle('activo');
     document.getElementById('sidebar-overlay').classList.toggle('activo');
 }
 
 function cambiarVista(vista) {
-    toggleSidebar(); 
+    toggleSidebar();
     document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('activo'));
 
-    document.getElementById('vista-malla').style.display = 'none';
-    document.getElementById('vista-calendario').style.display = 'none';
-    document.getElementById('vista-calculadora').style.display = 'none';
-    document.querySelector('.acciones-container .btn-exportar').style.display = 'none'; 
+    const vistas = ['malla', 'simulador', 'calendario', 'calculadora'];
+    vistas.forEach(v => {
+        document.getElementById(`vista-${v}`).style.display = 'none';
+    });
 
-    if (vista === 'malla') {
-        document.getElementById('vista-malla').style.display = 'block';
-        document.querySelector('.acciones-container .btn-exportar').style.display = 'inline-block'; 
-        document.querySelectorAll('.btn-nav')[0].classList.add('activo');
-    } else if (vista === 'calendario') {
-        document.getElementById('vista-calendario').style.display = 'block';
-        document.querySelectorAll('.btn-nav')[1].classList.add('activo');
-        // Borramos la función que dibujaba el calendario roto
-    } else if (vista === 'calculadora') {
-        document.getElementById('vista-calculadora').style.display = 'block';
-        document.querySelectorAll('.btn-nav')[2].classList.add('activo');
+    const indice = vistas.indexOf(vista);
+    if (indice !== -1) {
+        document.getElementById(`vista-${vista}`).style.display = 'block';
+        document.querySelectorAll('.btn-nav')[indice].classList.add('activo');
+    }
+
+    if (vista === 'calculadora') {
         inicializarCalculadora();
+    }
+
+    if (vista === 'calendario') {
+        inicializarCalendario();
     }
 }
 
-// ==========================================
-// CALCULADORA DE NOTAS (SISTEMA DE PERFILES)
-// ==========================================
+// =============
+// CALCULADORA
+// =============
 
-let perfilesCalc = JSON.parse(localStorage.getItem('mallaUAH_calcPerfiles')) || { 
-    "Ramo General": { meta: 4.0, pesoExamen: 30, evaluaciones: [] } 
+let perfilesCalc = JSON.parse(localStorage.getItem('mallaUAH_calcPerfiles')) || {
+    "Ramo General": { meta: 4.0, pesoExamen: 30, evaluaciones: [] }
 };
 let perfilActualCalc = localStorage.getItem('mallaUAH_calcPerfilActual') || "Ramo General";
-let modoModalPerfil = 'crear'; // Puede ser 'crear' o 'renombrar'
+let modoModalPerfil = 'crear';
 
-// Asegurar que exista un perfil si hay errores en caché
+// Sanity check
 if (!perfilesCalc[perfilActualCalc]) {
     perfilActualCalc = Object.keys(perfilesCalc)[0];
 }
 
 function inicializarCalculadora() {
-    actualizarSelectorPerfiles();
+    renderizarTabs();
     renderizarPerfilCalc();
 }
 
-function actualizarSelectorPerfiles() {
-    const selector = document.getElementById('calc-selector-ramo');
-    selector.innerHTML = '';
-    
+
+function renderizarTabs() {
+    const contenedor = document.getElementById('calc-tabs');
+    contenedor.innerHTML = '';
+
     Object.keys(perfilesCalc).forEach(nombre => {
-        const option = document.createElement('option');
-        option.value = nombre;
-        option.innerText = nombre;
-        if (nombre === perfilActualCalc) option.selected = true;
-        selector.appendChild(option);
+        // Cambiamos 'button' por 'div' para evitar conflictos
+        const tab = document.createElement('div');
+        tab.className = 'calc-tab' + (nombre === perfilActualCalc ? ' activo' : '');
+        tab.dataset.nombre = nombre;
+
+        const labelSpan = document.createElement('span');
+        labelSpan.textContent = nombre;
+        labelSpan.style.flex = "1"; 
+        labelSpan.style.marginRight = "10px";
+        tab.appendChild(labelSpan);
+
+        // Solo dejamos el botón de eliminar
+        const acciones = document.createElement('span');
+        acciones.className = 'calc-tab-acciones';
+        acciones.innerHTML = `
+            <button class="calc-tab-btn peligro" title="Eliminar" onclick="event.stopPropagation(); abrirModalEliminarPerfil()">✕</button>
+        `;
+        tab.appendChild(acciones);
+
+        tab.addEventListener('click', () => {
+            if (perfilActualCalc !== nombre) {
+                perfilActualCalc = nombre;
+                localStorage.setItem('mallaUAH_calcPerfilActual', perfilActualCalc);
+                renderizarTabs();
+                renderizarPerfilCalc();
+            }
+        });
+
+        contenedor.appendChild(tab);
     });
 }
 
-function cambiarPerfilCalc() {
-    perfilActualCalc = document.getElementById('calc-selector-ramo').value;
-    localStorage.setItem('mallaUAH_calcPerfilActual', perfilActualCalc);
-    renderizarPerfilCalc();
+// Mantener compatibilidad 
+function actualizarSelectorPerfiles() {
+    renderizarTabs();
 }
 
-// ---- CONTROL DE MODALES (SIN ALERTS NATIVOS) ----
+// ---- MODALES DE PERFIL ----
 
 function abrirModalCrearPerfil() {
     modoModalPerfil = 'crear';
-    document.getElementById('modal-perfil-titulo').innerText = "Nuevo Ramo";
+    document.getElementById('modal-perfil-titulo').textContent = "Nuevo Curso";
     document.getElementById('input-nombre-perfil').value = "";
     document.getElementById('modal-perfil-calc').style.display = 'flex';
+    document.getElementById('input-nombre-perfil').focus();
 }
 
 function abrirModalRenombrarPerfil() {
     modoModalPerfil = 'renombrar';
-    document.getElementById('modal-perfil-titulo').innerText = "Renombrar Ramo";
+    document.getElementById('modal-perfil-titulo').textContent = "Renombrar Curso";
     document.getElementById('input-nombre-perfil').value = perfilActualCalc;
     document.getElementById('modal-perfil-calc').style.display = 'flex';
+    document.getElementById('input-nombre-perfil').select();
 }
 
 function cerrarModalPerfil() {
@@ -467,31 +542,28 @@ function cerrarModalPerfil() {
 
 function guardarModalPerfil() {
     const nombreNuevo = document.getElementById('input-nombre-perfil').value.trim();
-    
-    if (nombreNuevo === "") {
+
+    if (!nombreNuevo) {
         mostrarNotificacion("⚠️ Debes ingresar un nombre.");
         return;
     }
-    
+
     if (perfilesCalc[nombreNuevo] && nombreNuevo !== perfilActualCalc) {
-        mostrarNotificacion("⚠️ Ya existe un ramo con ese nombre.");
+        mostrarNotificacion("⚠️ Ya existe un Curso con ese nombre.");
         return;
     }
 
     if (modoModalPerfil === 'crear') {
         perfilesCalc[nombreNuevo] = { meta: 4.0, pesoExamen: 30, evaluaciones: [] };
         perfilActualCalc = nombreNuevo;
-        mostrarNotificacion(`✅ Ramo "${nombreNuevo}" creado.`);
-    } 
-    else if (modoModalPerfil === 'renombrar') {
-        if (nombreNuevo !== perfilActualCalc) {
-            perfilesCalc[nombreNuevo] = perfilesCalc[perfilActualCalc];
-            delete perfilesCalc[perfilActualCalc];
-            perfilActualCalc = nombreNuevo;
-            mostrarNotificacion("✅ Ramo renombrado.");
-        }
+        mostrarNotificacion(`✅ Curso "${nombreNuevo}" creado.`);
+    } else if (modoModalPerfil === 'renombrar' && nombreNuevo !== perfilActualCalc) {
+        perfilesCalc[nombreNuevo] = perfilesCalc[perfilActualCalc];
+        delete perfilesCalc[perfilActualCalc];
+        perfilActualCalc = nombreNuevo;
+        mostrarNotificacion("✅ Curso renombrado.");
     }
-    
+
     guardarEnMemoriaCalc();
     actualizarSelectorPerfiles();
     renderizarPerfilCalc();
@@ -499,13 +571,10 @@ function guardarModalPerfil() {
 }
 
 function abrirModalEliminarPerfil() {
-    if (Object.keys(perfilesCalc).length === 1) {
-        mostrarNotificacion("⚠️ No puedes borrar tu único ramo.");
-        return;
-    }
-    document.getElementById('nombre-ramo-borrar').innerText = perfilActualCalc;
+    document.getElementById('nombre-ramo-borrar').textContent = perfilActualCalc;
     document.getElementById('modal-eliminar-perfil').style.display = 'flex';
-}
+    }
+
 
 function cerrarModalEliminarPerfil() {
     document.getElementById('modal-eliminar-perfil').style.display = 'none';
@@ -513,16 +582,43 @@ function cerrarModalEliminarPerfil() {
 
 function confirmarEliminarPerfil() {
     delete perfilesCalc[perfilActualCalc];
-    perfilActualCalc = Object.keys(perfilesCalc)[0]; 
-    
+    if (Object.keys(perfilesCalc).length === 0) {
+        perfilesCalc = { "Ramo General": { meta: 4.0, pesoExamen: 30, evaluaciones: [] } };
+    }
+    perfilActualCalc = Object.keys(perfilesCalc)[0];
+
     guardarEnMemoriaCalc();
     actualizarSelectorPerfiles();
     renderizarPerfilCalc();
     cerrarModalEliminarPerfil();
-    mostrarNotificacion("🗑️ Ramo eliminado.");
+    mostrarNotificacion("🗑️ Curso eliminado.");
 }
 
-// ---- LOGICA INTERNA Y MATEMÁTICAS ----
+function eliminarTodosLosCursos() {
+    document.getElementById('modal-eliminar-todo').style.display = 'flex';
+}
+
+function cerrarModalEliminarTodo() {
+    document.getElementById('modal-eliminar-todo').style.display = 'none';
+}
+
+function confirmarEliminarTodo() {
+       
+        perfilesCalc = {
+            "Ramo General": { meta: 4.0, pesoExamen: 30, evaluaciones: [] }
+        };
+        
+        perfilActualCalc = "Ramo General";
+        guardarEnMemoriaCalc();
+        actualizarSelectorPerfiles();
+        renderizarPerfilCalc();
+        cerrarModalEliminarTodo()
+        mostrarNotificacion("🗑️ Todos los cursos han sido eliminados.");
+        
+    }
+
+
+// ---- LÓGICA INTERNA DE CÁLCULO ----
 
 function guardarEnMemoriaCalc() {
     localStorage.setItem('mallaUAH_calcPerfiles', JSON.stringify(perfilesCalc));
@@ -531,52 +627,44 @@ function guardarEnMemoriaCalc() {
 
 function guardarEstadoCalc() {
     if (!perfilesCalc[perfilActualCalc]) return;
-    
-    perfilesCalc[perfilActualCalc].meta = parseFloat(document.getElementById('calc-meta').value) || 4.0;
-    perfilesCalc[perfilActualCalc].pesoExamen = parseFloat(document.getElementById('calc-peso-examen').value) || 0;
-    
-    const filas = document.querySelectorAll('.calc-fila');
+
+    perfilesCalc[perfilActualCalc].meta        = parseFloat(document.getElementById('calc-meta').value)         || 4.0;
+    perfilesCalc[perfilActualCalc].pesoExamen  = parseFloat(document.getElementById('calc-peso-examen').value)  || 0;
+
     const evaluaciones = [];
-    
-    filas.forEach(fila => {
-        const id = fila.id.replace('calc-fila-', '');
+    document.querySelectorAll('.calc-fila').forEach(fila => {
         evaluaciones.push({
-            id: id,
+            id:     fila.id.replace('calc-fila-', ''),
             nombre: fila.querySelector('.val-nombre').value,
-            nota: fila.querySelector('.val-nota').value,
-            peso: fila.querySelector('.val-peso').value
+            nota:   fila.querySelector('.val-nota').value,
+            peso:   fila.querySelector('.val-peso').value
         });
     });
-    
+
     perfilesCalc[perfilActualCalc].evaluaciones = evaluaciones;
     guardarEnMemoriaCalc();
-    calcularNotas(); 
+    calcularNotas();
 }
 
 function renderizarPerfilCalc() {
     const data = perfilesCalc[perfilActualCalc];
-    document.getElementById('calc-meta').value = data.meta;
-    document.getElementById('calc-peso-examen').value = data.pesoExamen;
-    
+    document.getElementById('calc-meta').value         = data.meta;
+    document.getElementById('calc-peso-examen').value  = data.pesoExamen;
+
     const contenedor = document.getElementById('calc-filas');
     contenedor.innerHTML = '';
-    
-    data.evaluaciones.forEach(ev => {
-        dibujarFilaEnPantalla(ev.id, ev.nombre, ev.nota, ev.peso);
-    });
-    
+
+    data.evaluaciones.forEach(ev => dibujarFilaEnPantalla(ev.id, ev.nombre, ev.nota, ev.peso));
     calcularNotas();
 }
 
 function agregarFilaCalc() {
-    const nuevoId = Date.now().toString(); 
-    dibujarFilaEnPantalla(nuevoId, "", "", "");
+    dibujarFilaEnPantalla(Date.now().toString(), "", "", "");
     guardarEstadoCalc();
 }
 
 function eliminarFilaCalc(id) {
-    const fila = document.getElementById(`calc-fila-${id}`);
-    if (fila) fila.remove();
+    document.getElementById(`calc-fila-${id}`)?.remove();
     guardarEstadoCalc();
 }
 
@@ -585,13 +673,53 @@ function dibujarFilaEnPantalla(id, nombre, nota, peso) {
     const fila = document.createElement('div');
     fila.className = 'calc-fila';
     fila.id = `calc-fila-${id}`;
-    
+    fila.draggable = true;
+
     fila.innerHTML = `
-        <input type="text" class="input-calc val-nombre" placeholder="Nombre (opcional)" maxlength="30" value="${nombre}" oninput="guardarEstadoCalc()">
-        <input type="text" class="input-calc val-nota" placeholder="1.0 - 7.0" value="${nota}" oninput="formatearNota(event, this)">
-        <input type="number" class="input-calc val-peso" placeholder="%" step="1" min="0" max="100" value="${peso}" oninput="guardarEstadoCalc()">
+        <span class="drag-handle" title="Arrastrar para reordenar">⠿</span>
+        <input type="text"   class="input-calc val-nombre" placeholder="Evaluación (opcional)" maxlength="30" value="${nombre}" oninput="guardarEstadoCalc()">
+        <input type="text"   class="input-calc val-nota"   placeholder="1.0–7.0" value="${nota}" oninput="formatearNota(event, this)">
+        <input type="number" class="input-calc val-peso"   placeholder="%" step="1" min="0" max="100" value="${peso}" oninput="formatearPeso(this)">
         <button onclick="eliminarFilaCalc('${id}')" class="btn-eliminar-fila" title="Eliminar fila">✖</button>
     `;
+
+
+    fila.querySelectorAll('input').forEach(input => {
+        input.addEventListener('mousedown', e => e.stopPropagation());
+    });
+
+    const handle = fila.querySelector('.drag-handle');
+    handle.addEventListener('mousedown', () => { fila.draggable = true; });
+
+    fila.addEventListener('dragstart', e => {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', fila.id);
+        setTimeout(() => fila.classList.add('dragging'), 0);
+    });
+
+    fila.addEventListener('dragend', () => {
+        fila.classList.remove('dragging');
+        document.querySelectorAll('.calc-fila').forEach(f => f.classList.remove('drag-over'));
+        guardarEstadoCalc();
+    });
+
+    fila.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        document.querySelectorAll('.calc-fila').forEach(f => f.classList.remove('drag-over'));
+        fila.classList.add('drag-over');
+    });
+
+    fila.addEventListener('drop', e => {
+        e.preventDefault();
+        const origenId = e.dataTransfer.getData('text/plain');
+        const origen = document.getElementById(origenId);
+        if (origen && origen !== fila) {
+            contenedor.insertBefore(origen, fila);
+        }
+        fila.classList.remove('drag-over');
+    });
+
     contenedor.appendChild(fila);
 }
 
@@ -600,86 +728,82 @@ function formatearNota(e, input) {
         guardarEstadoCalc();
         return;
     }
-    
-    let val = input.value.replace(/[^0-9]/g, ''); 
+
+    let val = input.value.replace(/[^0-9]/g, '');
     if (val.length > 2) val = val.substring(0, 2);
-    
-    if (val.length === 2) {
-        input.value = val.charAt(0) + '.' + val.charAt(1);
-    } else {
-        input.value = val;
-    }
+    if (val.length === 2) val = val.charAt(0) + '.' + val.charAt(1);
+
+    input.value = val;
     guardarEstadoCalc();
+}
+
+function formatearPeso(input) {
+    let val = input.value.replace(/[^0-9]/g, '');
+    if (input.value !== "") {
+        let val = parseFloat(input.value);
+        if (val>100) input.value = 100
+        if (val<0) input.value = 0
+    }
 }
 
 function calcularNotas() {
     let sumaPesos = 0;
     let sumaPonderada = 0;
-    let meta = parseFloat(document.getElementById('calc-meta').value) || 4.0;
-    let pesoExamen = parseFloat(document.getElementById('calc-peso-examen').value) || 0;
-    
-    const filas = document.querySelectorAll('.calc-fila');
-    
-    filas.forEach(fila => {
+    const meta       = parseFloat(document.getElementById('calc-meta').value)        || 4.0;
+    const pesoExamen = parseFloat(document.getElementById('calc-peso-examen').value) || 0;
+
+    document.querySelectorAll('.calc-fila').forEach(fila => {
         const notaStr = fila.querySelector('.val-nota').value;
         const pesoStr = fila.querySelector('.val-peso').value;
-        
-        let peso = 0;
-        if (pesoStr !== "") {
-            peso = parseFloat(pesoStr);
-            sumaPesos += peso;
-        }
 
-        if (notaStr !== "" && peso > 0) {
-            const nota = parseFloat(notaStr);
-            sumaPonderada += (nota * (peso / 100));
+        if (pesoStr !== "") {
+            const peso = parseFloat(pesoStr);
+            sumaPesos += peso;
+            if (notaStr !== "" && peso > 0) {
+                sumaPonderada += parseFloat(notaStr) * (peso / 100);
+            }
         }
     });
 
-    const txtSumaPeso = document.getElementById('calc-suma-peso');
-    const txtPromedio = document.getElementById('calc-promedio');
-    const cajaMensaje = document.getElementById('calc-mensaje-final');
+    const elPeso    = document.getElementById('calc-suma-peso');
+    const elProm    = document.getElementById('calc-promedio');
+    const elMensaje = document.getElementById('calc-mensaje-final');
+
+    elPeso.textContent = `${sumaPesos}%`;
+    elPeso.style.color = (sumaPesos + pesoExamen) > 100 ? '#d9534f' : 'inherit';
+
+    const promedioActual = sumaPesos > 0 ? sumaPonderada / (sumaPesos / 100) : 0;
+    elProm.textContent = sumaPesos > 0 ? promedioActual.toFixed(2) : '-';
     
-    txtSumaPeso.innerText = `${sumaPesos}%`;
-    txtSumaPeso.style.color = (sumaPesos + pesoExamen) > 100 ? '#d9534f' : 'inherit';
-    
-    let promedioActual = 0;
-    if (sumaPesos > 0) {
-        promedioActual = sumaPonderada / (sumaPesos / 100);
-    }
-    txtPromedio.innerText = sumaPesos > 0 ? promedioActual.toFixed(2) : '-';
-    
-    cajaMensaje.className = ''; 
-    cajaMensaje.style.background = '';
-    cajaMensaje.style.color = '';
-    cajaMensaje.style.border = '';
-    
+    elMensaje.className = '';
+    elMensaje.style.cssText = '';
+
     if (sumaPesos === 0) {
-        cajaMensaje.innerHTML = "Ingresa tus calificaciones y sus ponderaciones.";
-        cajaMensaje.style.background = 'var(--bg-bloqueado)';
+        elMensaje.innerHTML = "Ingresa tus calificaciones y sus ponderaciones.";
+        elMensaje.style.background = 'var(--bg-bloqueado)';
         return;
     }
 
     if ((sumaPesos + pesoExamen) > 100) {
-        cajaMensaje.className = 'calc-alerta-roja';
-        cajaMensaje.innerHTML = "Error: La suma de las ponderaciones de las notas y el examen supera el 100%.";
+        elMensaje.className = 'calc-alerta-roja';
+        elMensaje.innerHTML = "⚠️ La suma de ponderaciones + examen supera el 100%.";
         return;
     }
 
     if ((sumaPesos + pesoExamen) < 100) {
-        cajaMensaje.className = 'calc-alerta-naranja';
+        elMensaje.className = 'calc-alerta-naranja';
         const faltante = 100 - sumaPesos - pesoExamen;
-        cajaMensaje.innerHTML = `Falta un <strong>${faltante}%</strong> de evaluaciones por registrar en la tabla para realizar el cálculo del examen.`;
+        elMensaje.innerHTML = `Falta un <strong>${faltante}%</strong> de evaluaciones por registrar para calcular el examen.`;
         return;
     }
 
     if (pesoExamen === 0) {
         if (sumaPonderada >= meta) {
-            cajaMensaje.className = 'calc-alerta-verde';
-            cajaMensaje.innerHTML = `Curso aprobado. Tu promedio final es <strong>${sumaPonderada.toFixed(2)}</strong>.`;
+            elMensaje.className = 'calc-alerta-verde';
+            elMensaje.innerHTML = `✅ Curso aprobado. Promedio final: <strong>${sumaPonderada.toFixed(2)}</strong>.`;
         } else {
-            cajaMensaje.className = 'calc-alerta-roja';
-            cajaMensaje.innerHTML = `Curso reprobado. Tu promedio final es <strong>${sumaPonderada.toFixed(2)}</strong>.`;
+            elMensaje.className = 'calc-alerta-roja';
+            elMensaje.innerHTML = `❌ Curso reprobado. Promedio final: <strong>${sumaPonderada.toFixed(2)}</strong>.`;
         }
         return;
     }
@@ -687,15 +811,685 @@ function calcularNotas() {
     const notaNecesaria = (meta - sumaPonderada) / (pesoExamen / 100);
 
     if (notaNecesaria > 7.0) {
-        cajaMensaje.className = 'calc-alerta-roja';
-        cajaMensaje.innerHTML = `Matemáticamente imposible. Requieres un <strong>${notaNecesaria.toFixed(2)}</strong> en el examen final.`;
+        elMensaje.className = 'calc-alerta-roja';
+        elMensaje.innerHTML = `❌ Imposible. Necesitarías un <strong>${notaNecesaria.toFixed(2)}</strong> en el examen.`;
     } else if (notaNecesaria <= 1.0) {
-        cajaMensaje.className = 'calc-alerta-verde';
-        cajaMensaje.innerHTML = `Situación asegurada. Incluso obteniendo <strong>1.0</strong> en el examen final, apruebas el curso.`;
+        elMensaje.className = 'calc-alerta-verde';
+        elMensaje.innerHTML = `✅ Aprobado asegurado. Con cualquier nota en el examen, pasas el curso.`;
     } else {
-        cajaMensaje.className = 'calc-alerta-naranja';
-        cajaMensaje.innerHTML = `Necesitarás un <strong>${notaNecesaria.toFixed(2)}</strong> en el examen final para aprobar.`;
+        elMensaje.className = 'calc-alerta-naranja';
+        elMensaje.innerHTML = `Necesitas un <strong>${notaNecesaria.toFixed(2)}</strong> en el examen para aprobar.`;
     }
 }
 
-window.onload = init;
+////////////////////////////////////////////////////
+// simulador de créditos
+///////////////////////////////////////////////////
+
+
+let simFase = 1; // 1: Aprobados, 2: Cursando
+let simAprobados = new Set();
+let simCursando = new Set();
+
+function inicializarSimulador() {
+    if (simAprobados.size === 0 && simFase === 1) {
+        for (const codigo in estadoRamos) {
+            if (estadoRamos[codigo]) simAprobados.add(codigo);
+        }
+    }
+    renderMallaSimulador();
+    actualizarPanelCreditosSim();
+}
+
+
+function reiniciarSimulador() {
+    const modal = document.getElementById('modal-reiniciar-simulador');
+    if (modal) modal.style.display = 'flex';
+}
+
+function cerrarModalReiniciarSim() {
+    const modal = document.getElementById('modal-reiniciar-simulador');
+    if (modal) modal.style.display = 'none';
+}
+
+function confirmarReiniciarSim() {
+    simFase = 1;
+    simAprobados.clear();
+    simCursando.clear();
+
+    document.getElementById('sim-fase-1').classList.add('activa');
+    document.getElementById('sim-fase-2').classList.remove('activa');
+    document.getElementById('sim-panel-creditos').style.display = 'none';
+    document.getElementById('sim-btn-fase').innerText = "Siguiente";
+
+    renderMallaSimulador();
+    actualizarPanelCreditosSim();
+    cerrarModalReiniciarSim();
+    mostrarNotificacion("🔄 Simulador restablecido.");
+}
+
+
+function avanzarFaseSimulador() {
+    if (simFase === 1) {
+        simFase = 2;
+        document.getElementById('sim-fase-1').classList.remove('activa');
+        document.getElementById('sim-fase-2').classList.add('activa');
+        document.getElementById('sim-panel-creditos').style.display = 'block';
+        document.getElementById('sim-btn-fase').innerText = "Volver";
+    } else {
+        simFase = 1;
+        simCursando.clear(); 
+        document.getElementById('sim-fase-2').classList.remove('activa');
+        document.getElementById('sim-fase-1').classList.add('activa');
+        document.getElementById('sim-panel-creditos').style.display = 'none';
+        document.getElementById('sim-btn-fase').innerText = "Siguiente";
+    }
+    renderMallaSimulador();
+    actualizarPanelCreditosSim();
+}
+
+function renderMallaSimulador() {
+    const contenedor = document.getElementById('malla-simulador');
+    contenedor.innerHTML = '';
+    let numSemestre = 1;
+
+    for (const [, ramos] of Object.entries(datosMalla.semestres)) {
+        const col = document.createElement('div');
+        col.className = 'semestre-col';
+        const tituloSim = document.createElement('div');
+        tituloSim.className = 'semestre-titulo';
+        tituloSim.textContent = `Semestre ${numSemestre}`;
+        tituloSim.style.cursor = 'pointer';
+        tituloSim.title = 'Click para seleccionar todos los ramos disponibles';
+        tituloSim.addEventListener('click', () => aprobarSemestreSimulador(ramos));
+        col.appendChild(tituloSim);
+
+        ramos.forEach(ramo => {
+            const divRamo = crearElementoRamo(ramo.nombre, ramo.codigo, ramo.creditos, ramo.categoria, ramo.preReqs);
+            divRamo.onclick = () => clickRamoSimulador(ramo.codigo, ramo.preReqs);
+            col.appendChild(divRamo);
+        });
+
+        contenedor.appendChild(col);
+        numSemestre++;
+    }
+
+    // Una vez construido el DOM, aplicar los estados con animación
+    actualizarEstadosSim();
+}
+
+function actualizarEstadosSim() {
+    document.querySelectorAll('#malla-simulador .ramo').forEach(el => {
+        const codigo = el.id.replace('ramo-', '');
+
+        el.classList.remove('estado-bloqueado', 'estado-disponible', 'estado-aprobado', 'estado-cursando');
+
+        if (simAprobados.has(codigo)) {
+            el.classList.add('estado-aprobado');
+        } else if (simCursando.has(codigo)) {
+            el.classList.add('estado-cursando');
+        } else {
+            const reqs = diccionarioPreReqs[codigo] || [];
+            const cumple = reqs.every(req => {
+                if (Array.isArray(req)) return req.some(r => simAprobados.has(r));
+                return simAprobados.has(req);
+            });
+            el.classList.add(cumple ? 'estado-disponible' : 'estado-bloqueado');
+        }
+    });
+}
+
+function clickRamoSimulador(codigo, preReqs) {
+    if (simFase === 1) {
+        if (simAprobados.has(codigo)) {
+            // Al desmarcar, hay que cascadear dependientes igual que en la malla
+            simAprobados.delete(codigo);
+            // Desaprobar dependientes que ya no cumplen prereqs
+            let huboCambios;
+            do {
+                huboCambios = false;
+                for (const cod of simAprobados) {
+                    const reqs = diccionarioPreReqs[cod] || [];
+                    const cumple = reqs.every(req => {
+                        if (Array.isArray(req)) return req.some(r => simAprobados.has(r));
+                        return simAprobados.has(req);
+                    });
+                    if (!cumple) {
+                        simAprobados.delete(cod);
+                        huboCambios = true;
+                    }
+                }
+            } while (huboCambios);
+        } else {
+            // Verificar prereqs antes de aprobar
+            const cumplePreReqs = preReqs.every(req => {
+                if (Array.isArray(req)) return req.some(r => simAprobados.has(r));
+                return simAprobados.has(req);
+            });
+            if (!cumplePreReqs) {
+                mostrarNotificacion("No puedes marcar este curso como aprobado sin sus pre-requisitos.");
+                return;
+            }
+            simAprobados.add(codigo);
+        }
+    } else if (simFase === 2) {
+        if (simAprobados.has(codigo)) {
+            mostrarNotificacion("Ya marcaste este curso como aprobado.");
+            return;
+        }
+
+        const cumplePreReqs = preReqs.every(req => {
+            if (Array.isArray(req)) return req.some(r => simAprobados.has(r));
+            return simAprobados.has(req);
+        });
+
+        if (!cumplePreReqs) {
+            mostrarNotificacion("No cumples los pre-requisitos según tus cursos aprobados.");
+            return;
+        }
+
+        if (simCursando.has(codigo)) {
+            simCursando.delete(codigo);
+        } else {
+            simCursando.add(codigo);
+        }
+        actualizarPanelCreditosSim();
+    }
+    actualizarEstadosSim();
+    if (simFase === 2) actualizarPanelCreditosSim();
+}
+
+function actualizarPanelCreditosSim() {
+    if (simFase !== 2) return;
+    let creditosTotal = 0;
+
+    simCursando.forEach(codigo => {
+        for (const ramos of Object.values(datosMalla.semestres)) {
+            const ramoObj = ramos.find(r => r.codigo === codigo);
+            if (ramoObj) creditosTotal += ramoObj.creditos;
+        }
+    });
+
+    document.getElementById('sim-total-creditos').innerText = creditosTotal;
+    const msgBox = document.getElementById('sim-alerta-msg');
+
+    msgBox.className = 'sim-alerta'; 
+
+    if (creditosTotal === 0) {
+        msgBox.innerHTML = "Selecciona ramos para armar tu semestre.";
+        msgBox.classList.add('neutral');
+    } else if (creditosTotal < 30) {
+        msgBox.innerHTML = `⚠️ Tienes ${creditosTotal} créditos. El mínimo es 30. <br><span style="font-size:0.85em; font-weight:normal;">Te recomendamos tomar un OFG u OFT para rellenar.</span>`;
+        msgBox.classList.add('peligro');
+        msgBox.style.borderColor = "#E8B135";
+        msgBox.style.color = "#E8B135";
+    } else if (creditosTotal > 60) {
+        msgBox.innerHTML = `🚨 Límite excedido (${creditosTotal}/60). <br><span style="font-size:0.85em; font-weight:normal;">Debes hacer una solicitud especial. Contacto: minostroza@uahurtado.cl</span>`;
+        msgBox.classList.add('peligro');
+    } else {
+        msgBox.innerHTML = "✅ Carga académica válida!";
+        msgBox.classList.add('exito');
+    }
+}
+
+
+const btnSimulador = document.querySelector('button[onclick="cambiarVista(\'simulador\')"]');
+if (btnSimulador) {
+    btnSimulador.addEventListener('click', inicializarSimulador);
+}
+
+
+
+async function exportarMalla() {
+    const vista = document.getElementById('vista-malla');
+    const contenedorScroll = document.getElementById('malla');
+    const boton = document.getElementById('btn-exportar-malla');
+    const textoOriginal = boton.innerText;
+    boton.innerText = "⏳ Generando...";
+    boton.disabled = true;
+
+    const overflowOriginal = contenedorScroll.style.overflowX;
+    contenedorScroll.style.overflowX = 'visible';
+
+    try {
+        const canvas = await html2canvas(vista, {
+            scale: 2, 
+            useCORS: true,
+            backgroundColor: getComputedStyle(document.body).getPropertyValue('--bg-principal'),
+            width: vista.scrollWidth,
+            windowWidth: vista.scrollWidth,
+            scrollX: 0
+        });
+
+        const link = document.createElement('a');
+        link.download = `Mi-Malla-UAH-${mencionSeleccionada}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        
+        mostrarNotificacion("✅ Malla guardada");
+    } catch (err) {
+        console.error("Error al exportar:", err);
+        mostrarNotificacion("❌ Hubo un error al generar la imagen");
+    } finally {
+        // Devolver el scroll a la normalidad y restaurar el botón
+        contenedorScroll.style.overflowX = overflowOriginal;
+        boton.innerText = textoOriginal;
+        boton.disabled = false;
+    }
+}
+
+// ==========================================
+// CALENDARIO Y PLANIFICADOR DE ESTUDIO
+// ==========================================
+
+let calEventos = JSON.parse(localStorage.getItem('mallaUAH_calEventos')) || [];
+let calMetas = JSON.parse(localStorage.getItem('mallaUAH_calMetas')) || [];
+let fechaVisualizacionCal = new Date(); // Fecha para controlar el mes que se está mirando
+
+function inicializarCalendario() {
+    renderizarCalendario();
+    renderizarMetasCal();
+}
+
+// --- RENDERIZADO DEL CALENDARIO ---
+
+function renderizarCalendario() {
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+    const isMobile = window.innerWidth < 768; // Detectamos si es teléfono
+
+    if (isMobile) {
+        renderizarVistaSemanal(grid); // Solo 7 días para el carrusel
+    } else {
+        renderizarVistaMensual(grid); // El mes completo para PC
+    }
+}
+
+// --- VISTA MENSUAL (Tu código original organizado) ---
+function renderizarVistaMensual(grid) {
+    const mes = fechaVisualizacionCal.getMonth();
+    const anio = fechaVisualizacionCal.getFullYear();
+    const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    
+    document.getElementById('cal-mes-anio-texto').textContent = `${mesesNombres[mes]} ${anio}`;
+
+    let primerDia = new Date(anio, mes, 1).getDay() - 1;
+    if (primerDia === -1) primerDia = 6; 
+    const diasEnMes = new Date(anio, mes + 1, 0).getDate();
+    const hoy = new Date();
+    const esMesActual = hoy.getMonth() === mes && hoy.getFullYear() === anio;
+
+    for (let i = 0; i < primerDia; i++) {
+        const divVacio = document.createElement('div');
+        divVacio.className = 'cal-dia vacio';
+        grid.appendChild(divVacio);
+    }
+
+    for (let dia = 1; dia <= diasEnMes; dia++) {
+        const fechaStr = `${anio}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+        const divDia = crearCeldaDia(dia, fechaStr, esMesActual && dia === hoy.getDate(), false);
+        grid.appendChild(divDia);
+    }
+}
+
+// --- VISTA SEMANAL (Nueva lógica para teléfono) ---
+function renderizarVistaSemanal(grid) {
+    const copia = new Date(fechaVisualizacionCal);
+    const diaSem = copia.getDay();
+    const diff = copia.getDate() - diaSem + (diaSem === 0 ? -6 : 1);
+    const lunes = new Date(copia.setDate(diff));
+
+    const mesesNombres = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const diasNombres = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+    const domingo = new Date(lunes);
+    domingo.setDate(lunes.getDate() + 6);
+    document.getElementById('cal-mes-anio-texto').textContent = `${lunes.getDate()} ${mesesNombres[lunes.getMonth()]} - ${domingo.getDate()} ${mesesNombres[domingo.getMonth()]}`;
+
+    const hoyStr = new Date().toISOString().split('T')[0];
+
+    for (let i = 0; i < 7; i++) {
+        const actual = new Date(lunes);
+        actual.setDate(lunes.getDate() + i);
+        const fechaStr = actual.toISOString().split('T')[0];
+        const divDia = crearCeldaDia(actual.getDate(), fechaStr, fechaStr === hoyStr, true, diasNombres[i]);
+        grid.appendChild(divDia);
+    }
+}
+
+// --- CREADOR DE DÍAS (Unificado) ---
+function crearCeldaDia(numero, fechaStr, esHoy, esMobile, nombreDia = "") {
+    const div = document.createElement('div');
+    div.className = 'cal-dia' + (esHoy ? ' hoy' : '');
+    
+    const headerHtml = esMobile 
+        ? `<div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-weight: bold; color: var(--color-naranjo); font-size: 0.95em;">${nombreDia}</span>
+            <span class="cal-numero" style="margin:0;">${numero}</span>
+           </div>`
+        : `<div class="cal-numero">${numero}</div>`;
+        
+    div.innerHTML = headerHtml;
+
+    const eventosDia = calEventos.filter(e => e.fecha === fechaStr);
+    eventosDia.forEach(ev => {
+        const evDiv = document.createElement('div');
+        evDiv.className = `cal-evento ${ev.tipo}`;
+        evDiv.textContent = ev.titulo;
+        evDiv.onclick = (e) => { e.stopPropagation(); eliminarEventoCal(ev.id); };
+        div.appendChild(evDiv);
+    });
+    return div;
+}
+
+// --- NAVEGACIÓN CORREGIDA ---
+function cambiarMesCal(delta) {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+        fechaVisualizacionCal.setDate(fechaVisualizacionCal.getDate() + (delta * 7)); 
+    } else {
+        fechaVisualizacionCal.setMonth(fechaVisualizacionCal.getMonth() + delta); 
+    }
+    renderizarCalendario();
+}
+
+let idEventoABorrar = null;
+let idMetaABorrar = null;
+
+// --- GESTIÓN DE EVENTOS ---
+
+function abrirModalEventoCal() {
+    document.getElementById('input-cal-titulo').value = '';
+    document.getElementById('input-cal-fecha').value = '';
+    document.getElementById('modal-evento-cal').style.display = 'flex';
+}
+
+function cerrarModalEventoCal() {
+    document.getElementById('modal-evento-cal').style.display = 'none';
+}
+
+function guardarEventoCal() {
+    const titulo = document.getElementById('input-cal-titulo').value.trim();
+    const fecha = document.getElementById('input-cal-fecha').value;
+    const tipo = document.getElementById('input-cal-tipo').value;
+
+    if (!titulo || !fecha) {
+        mostrarNotificacion("⚠️ Debes ingresar un título y una fecha.");
+        return;
+    }
+
+    const nuevoEvento = { id: Date.now().toString(), titulo, fecha, tipo };
+    calEventos.push(nuevoEvento);
+    
+    localStorage.setItem('mallaUAH_calEventos', JSON.stringify(calEventos));
+    renderizarCalendario();
+    cerrarModalEventoCal();
+    mostrarNotificacion("✅ Evento agregado al calendario.");
+}
+
+function eliminarEventoCal(id) {
+    idEventoABorrar = id;
+    document.getElementById('modal-confirmar-evento').style.display = 'flex';
+}
+function cerrarModalConfirmarEvento() {
+    document.getElementById('modal-confirmar-evento').style.display = 'none';
+    idEventoABorrar = null;
+}
+
+function confirmarBorradoEvento() {
+    if (idEventoABorrar) {
+        calEventos = calEventos.filter(e => e.id !== idEventoABorrar);
+        localStorage.setItem('mallaUAH_calEventos', JSON.stringify(calEventos));
+        renderizarCalendario();
+        mostrarNotificacion("🗑️ Evento eliminado.");
+    }
+    cerrarModalConfirmarEvento();
+}
+
+
+// --- GESTIÓN DE METAS ---
+
+function renderizarMetasCal() {
+    const contenedor = document.getElementById('cal-lista-metas');
+    contenedor.innerHTML = '';
+
+    if (calMetas.length === 0) {
+        contenedor.innerHTML = '<div style="font-size: 0.9em; color: var(--texto-bloqueado); text-align: center; padding: 20px;">No has definido metas aún.</div>';
+        return;
+    }
+
+    calMetas.forEach(meta => {
+        const div = document.createElement('div');
+        // Aseguramos que la clase se aplique correctamente basándose en el estado booleano
+        div.className = `cal-meta-item ${meta.completada === true ? 'completada' : ''}`;
+        
+        div.innerHTML = `
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <input type="checkbox" class="check-meta" 
+                    ${meta.completada === true ? 'checked' : ''} 
+                    onclick="toggleMetaCompletada('${meta.id}')">
+                <div style="flex: 1;">
+                    <div class="cal-meta-horas">⏱️ ${meta.horas} hrs objetivo</div>
+                    <div class="cal-meta-desc"><strong>Meta:</strong> ${meta.descripcion}</div>
+                </div>
+                <button class="btn-eliminar-meta" style="position: static;" onclick="eliminarMetaCal('${meta.id}')">✖</button>
+            </div>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
+function toggleMetaCompletada(id) {
+    // Buscamos la meta y forzamos el cambio de estado
+    const meta = calMetas.find(m => m.id === id);
+    if (meta) {
+        meta.completada = !meta.completada;
+        localStorage.setItem('mallaUAH_calMetas', JSON.stringify(calMetas));
+        renderizarMetasCal(); // Volvemos a dibujar para reflejar el cambio
+        
+        if (meta.completada) {
+            mostrarNotificacion("🌟 ¡Objetivo cumplido! Sigue así.");
+        }
+    }
+}
+
+function abrirModalMetaCal() {
+    document.getElementById('input-meta-horas').value = '';
+    document.getElementById('input-meta-descripcion').value = '';
+    document.getElementById('modal-meta-cal').style.display = 'flex';
+}
+
+function cerrarModalMetaCal() {
+    document.getElementById('modal-meta-cal').style.display = 'none';
+}
+
+function guardarMetaCal() {
+    const horas = document.getElementById('input-meta-horas').value;
+    const descripcion = document.getElementById('input-meta-descripcion').value.trim();
+
+    if (!horas || !descripcion) {
+        mostrarNotificacion("⚠️ Completa los campos para establecer tu meta.");
+        return;
+    }
+
+    const nuevaMeta = { 
+        id: Date.now().toString(), 
+        horas, 
+        descripcion, 
+        completada: false // Nace sin marcar
+    };
+    
+    calMetas.push(nuevaMeta);
+    localStorage.setItem('mallaUAH_calMetas', JSON.stringify(calMetas));
+    
+    renderizarMetasCal();
+    cerrarModalMetaCal();
+    mostrarNotificacion("🎯 Meta de estudio guardada.");
+}
+
+function eliminarMetaCal(id) {
+    idMetaABorrar = id;
+    document.getElementById('modal-confirmar-meta').style.display = 'flex';
+}
+
+function cerrarModalConfirmarMeta() {
+    document.getElementById('modal-confirmar-meta').style.display = 'none';
+    idMetaABorrar = null;
+}
+
+function confirmarBorradoMeta() {
+    if (idMetaABorrar) {
+        calMetas = calMetas.filter(m => m.id !== idMetaABorrar);
+        localStorage.setItem('mallaUAH_calMetas', JSON.stringify(calMetas));
+        renderizarMetasCal();
+        mostrarNotificacion("🗑️ Meta eliminada.");
+    }
+    cerrarModalConfirmarMeta();
+}
+
+/* BORRAR TODAS LAS METAS */
+
+function abrirModalEliminarTodasMetas() {
+    if (calMetas.length === 0) {
+        mostrarNotificacion("⚠️ No tienes metas para eliminar.");
+        return;
+    }
+    document.getElementById('modal-eliminar-todas-metas').style.display = 'flex';
+}
+
+function cerrarModalEliminarTodasMetas() {
+    document.getElementById('modal-eliminar-todas-metas').style.display = 'none';
+}
+
+function confirmarEliminarTodasMetas() {
+    calMetas = []; // Vaciamos el array global
+    localStorage.setItem('mallaUAH_calMetas', JSON.stringify(calMetas));
+    renderizarMetasCal();
+    cerrarModalEliminarTodasMetas();
+    mostrarNotificacion("🗑️ Se han eliminado todas las metas.");
+}
+
+function abrirModalEliminarTodasMetas() {
+    if (calMetas.length === 0) {
+        mostrarNotificacion("⚠️ No tienes metas para eliminar.");
+        return;
+    }
+    document.getElementById('modal-eliminar-todas-metas').style.display = 'flex';
+}
+
+function cerrarModalEliminarTodasMetas() {
+    document.getElementById('modal-eliminar-todas-metas').style.display = 'none';
+}
+
+function confirmarEliminarTodasMetas() {
+    calMetas = []; 
+    localStorage.setItem('mallaUAH_calMetas', JSON.stringify(calMetas));
+    renderizarMetasCal();
+    cerrarModalEliminarTodasMetas();
+    mostrarNotificacion("🗑️ Se han eliminado todas las metas.");
+}
+
+/* ---------------------------------------------------------------*/
+
+cargarColorPreferido();
+
+function cambiarColorTema(nuevoColor) {
+    if (!nuevoColor) return;
+    document.documentElement.style.setProperty('--color-naranjo', nuevoColor);
+    localStorage.setItem('colorPreferido', nuevoColor);
+}
+
+function cargarColorPreferido() {
+    const colorGuardado = localStorage.getItem('colorPreferido');
+    if (colorGuardado) {
+        document.documentElement.style.setProperty('--color-naranjo', colorGuardado);
+        
+        
+        const picker = document.getElementById('colorPicker');
+        if (picker) picker.value = colorGuardado;
+    }
+}
+
+/* ---------------------------------------------------------------*/
+
+function aprobarSemestreMalla(ramos) {
+    const ramosMencion = ramos.filter(r => {
+        if (r.categoria === 'ECONOM' && mencionSeleccionada !== 'ECONOM') return false;
+        if (r.categoria === 'ADMIN'  && mencionSeleccionada !== 'ADMIN')  return false;
+        return true;
+    });
+
+    // Si todos los disponibles ya están aprobados, desaprobarlos todos
+    const todosAprobados = ramosMencion.every(r => estadoRamos[r.codigo]);
+
+    if (todosAprobados) {
+        ramosMencion.forEach(r => {
+            estadoRamos[r.codigo] = false;
+        });
+        desaprobarDependientes();
+    } else {
+        ramosMencion.forEach(r => {
+            if (!estadoRamos[r.codigo] && verificarPreReqs(diccionarioPreReqs[r.codigo])) {
+                estadoRamos[r.codigo] = true;
+            }
+        });
+    }
+
+    actualizarEstados();
+    actualizarContadorCreditos();
+    guardarProgreso();
+}
+
+function aprobarSemestreSimulador(ramos) {
+    if (simFase === 1) {
+        const todosAprobados = ramos.every(r => simAprobados.has(r.codigo));
+
+        if (todosAprobados) {
+            ramos.forEach(r => {
+                simAprobados.delete(r.codigo);
+            });
+            // Cascada de dependientes
+            let huboCambios;
+            do {
+                huboCambios = false;
+                for (const cod of simAprobados) {
+                    const reqs = diccionarioPreReqs[cod] || [];
+                    const cumple = reqs.every(req => {
+                        if (Array.isArray(req)) return req.some(r => simAprobados.has(r));
+                        return simAprobados.has(req);
+                    });
+                    if (!cumple) { simAprobados.delete(cod); huboCambios = true; }
+                }
+            } while (huboCambios);
+        } else {
+            ramos.forEach(r => {
+                const reqs = diccionarioPreReqs[r.codigo] || [];
+                const cumple = reqs.every(req => {
+                    if (Array.isArray(req)) return req.some(c => simAprobados.has(c));
+                    return simAprobados.has(req);
+                });
+                if (cumple) simAprobados.add(r.codigo);
+            });
+        }
+    } else if (simFase === 2) {
+        const disponibles = ramos.filter(r => {
+            if (simAprobados.has(r.codigo)) return false;
+            const reqs = diccionarioPreReqs[r.codigo] || [];
+            return reqs.every(req => {
+                if (Array.isArray(req)) return req.some(c => simAprobados.has(c));
+                return simAprobados.has(req);
+            });
+        });
+
+        const todosCursando = disponibles.every(r => simCursando.has(r.codigo));
+        disponibles.forEach(r => {
+            todosCursando ? simCursando.delete(r.codigo) : simCursando.add(r.codigo);
+        });
+        actualizarPanelCreditosSim();
+    }
+
+    actualizarEstadosSim();
+}
+
+
+window.addEventListener('DOMContentLoaded', init);
